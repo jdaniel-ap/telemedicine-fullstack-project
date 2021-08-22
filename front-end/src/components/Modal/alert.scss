@@ -1,0 +1,39 @@
+em {
+  display: block;
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.error {
+  opacity: 1;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  border-radius: 10px;
+  animation: translateAlert 0.1s linear;
+}
+
+.success {
+  opacity: 1;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  border-radius: 10px;
+  animation: translateAlert 0.1s linear;
+}
+
+@keyframes translateAlert {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

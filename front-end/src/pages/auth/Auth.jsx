@@ -5,9 +5,10 @@ import logoImg from '../../assets/images/Untitled.png';
 import '../auth/auth.scss';
 import Button from '../../components/Button/Button';
 import { AuthContext } from '../../context/AuthContext';
+import Alert from '../../components/Modal/Alert';
 
 function Auth() {
-  const { fillFormFields, handleLogin } = useContext(AuthContext);
+  const { fillFormFields, handleLogin, setSignState, signState } = useContext(AuthContext);
 
   return (
     <div id='page-auth'>
@@ -22,23 +23,24 @@ function Auth() {
             <input 
               type="text"
               name="username"
-              id=""
               placeholder="Usuario"
-              onChange={(e) => fillFormFields(e)}
-            />
+              onChange={(e) => fillFormFields(e, true)}
+              />
             <input 
               type="password"
               name="password"
-              id=""
               placeholder="Contraseña"
-              onChange={(e) => fillFormFields(e)}
-            />
-            <Button onClick={(e) => handleLogin(e)}>
+              onChange={(e) => fillFormFields(e, true)}
+              />
+            <Button onClick={(e) => handleLogin(e, true)}>
               Iniciar sesion
             </Button>
           </form>
-          <p>Si no tienes cuenta puedes registrarte <Link to="/signup">click aqui</Link></p>
+          <p>Si no tienes cuenta puedes registrarte {'\n'}
+            <Link to="/signup" onClick={() => setSignState(prevState => ({ ...prevState, signIn: false}))}>aqui</Link>
+          </p>
         </div>
+          { signState.signIn && <Alert className='error' onClick>Usuario o contraseña incorrectos</Alert> }
       </main>
     </div>
   )

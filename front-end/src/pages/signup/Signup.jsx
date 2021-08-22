@@ -1,30 +1,46 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
-import illustrationImg from '../../../assets/images/signup.png';
-import logoImg from '../../../assets/images/Untitled.png';
-import '../../auth/auth.scss';
-import Button from '../../../components/Button/Button';
-import { AuthContext } from '../../../context/AuthContext';
+import illustrationImg from '../../assets/images/register.png';
+import logoImg from '../../assets/images/Untitled.png';
+import './signup.scss';
+import Button from '../../components/Button/Button';
+import { AuthContext } from '../../context/AuthContext';
+import Alert from '../../components/Modal/Alert';
 
-function Register() {
-  const { signupValues ,signupState, fillFormFields, handleSignup } = useContext(AuthContext);
+function Signup() {
+  const { signupValues, 
+          setSignupValues,
+          signState,
+          fillFormFields,
+          handleSignup,
+          setSignState 
+        } = useContext(AuthContext);
+
+  const resetForm = () => {
+    setSignupValues({ username: '', email: '', password: '', medicRole: false});
+    setSignState(prevState => ({...prevState, signUp: false }));
+
+  };
   return (
     <div id='page-auth'>
       <aside>
         <img src={ illustrationImg } alt='simbolize a question' />
         <p>Registrate en Medtools y facilita la gestion tu tiempo</p>
       </aside>
-
       <main>
         <div className='main-content'>
           <img src={ logoImg } alt='Consult' />
           <form action=''>
-          { !signupState ? 
-          <> 
+            <input 
+              type='text'
+              name='fullname'
+              placeholder='Nombres'
+              value={signupValues.fullname}
+              onChange={(e) => fillFormFields(e)}
+            />
             <input 
               type='text'
               name='username'
-              id=''
               placeholder='Usuario'
               value={signupValues.username}
               onChange={(e) => fillFormFields(e)}
@@ -32,7 +48,6 @@ function Register() {
             <input 
               type='text'
               name='email'
-              id=''
               placeholder='Email'
               value={signupValues.email}
               onChange={(e) => fillFormFields(e)}
@@ -40,7 +55,6 @@ function Register() {
             <input 
               type='password'
               name='password'
-              id=''
               placeholder='Contraseña'
               value={signupValues.password}
               onChange={(e) => fillFormFields(e)
@@ -58,18 +72,13 @@ function Register() {
             <Button onClick={(e) => handleSignup(e)}>
               Registrarse
             </Button>
-          </> 
-          : <>
-              <h2>REGISTRO COMPLETADO</h2>
-              <img src='https://i.stack.imgur.com/EzFNr.gif' width="50" alt="200" />
-            </> 
-          }
-          <p> { !signupState ? 'Si ya tienes cuenta puedes ingresar ':'Tu registro fue exitoso, para continuar ingresa '}<Link to='/signin'>aqui</ Link></p>
+          <p>Si ya tienes cuenta puedes ingresar <Link to='/' onClick={() => resetForm()}>aqui</ Link></p>
           </form>
         </div>
+        { signState.signUp && <Alert className={signState.serverResponse.success ? 'success' : 'error'}>{signState.serverResponse.message}</Alert>}
       </main>
     </div>
   )
 }
 
-export default Register
+export default Signup

@@ -2,15 +2,17 @@ import './global.scss';
 import { Route, Switch } from 'react-router-dom';
 import Auth from './pages/auth/Auth';
 import AuthContextProvider from './context/AuthContext';
-import Register from './pages/auth/register/Register';
+import Signup from './pages/signup/Signup';
+import AdminDashboard from './pages/dashboard/AdminDashboard';
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <AuthContextProvider>
-          <Route path='/signin' component={Auth} />
-          <Route path='/signup' component={Register} />
+          <Route exact path='/' component={ Auth } />
+          <Route path='/signup' component={ Signup } />
+          <Route path='/dashboard' component={ AdminDashboard } />
         </AuthContextProvider>
       </Switch>
     </div>
