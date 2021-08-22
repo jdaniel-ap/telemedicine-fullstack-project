@@ -20,7 +20,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     setUserData(validateToken());
-  }, [])
+  }, [setUserData, validateToken])
 
   return (
     <div className='content'>
