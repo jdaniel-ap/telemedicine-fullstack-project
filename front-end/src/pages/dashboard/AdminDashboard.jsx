@@ -1,16 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/images/Untitled.png';
-import Asideoption from '../../components/asideOption/asideoption';
+import Asideoption from '../../components/AsideOption/Asideoption';
 import { AuthContext } from '../../context/AuthContext';
 import './adminDashboard.scss';
-import emptyImg from '../../assets/images/empty.svg'
+import emptyImg from '../../assets/images/empty.svg';
 
 function AdminDashboard() {
   const history = useHistory();
-  const [asideEvent, setAsideEvent] = useState('');
   const [userData, setUserData] = useState({});
-  const { validateToken } = useContext(AuthContext)
+  const { validateToken, asideEvent, setAsideEvent } = useContext(AuthContext)
   const options = ['Perfil', 'Consultas', 'Historial', 'Configuracion'];
 
   function logout() {
@@ -27,7 +26,7 @@ function AdminDashboard() {
       <header>
         <img src={logo} alt='Medtools'/>
         <div>
-          <span>VER HISTORIAL</span>
+          <span>INICIO</span>
           <span>PACIENTES EN ESPERA</span>
           <span>ENVIAR NOTIFICACION</span>
           <span>AYUDA</span>
@@ -43,12 +42,13 @@ function AdminDashboard() {
                 name={option}
                 key={option}
                 state={asideEvent}
-                setState={setAsideEvent} 
+                setState={setAsideEvent}
+                linkId={userData._id}
               />)}
           </div>
         </aside>
         <section>
-        <h2>Bienvenido {userData ? userData.fullname &&  userData.fullname.split(' ')[0] : ''}, tienes 0 novedades</h2>
+        <h2>Hola {userData ? userData.fullname &&  userData.fullname.split(' ')[0] : ''}, tienes 0 novedades</h2>
         <div className='welcome-content'>
           <img src={emptyImg} alt='empty place' />
         </div>

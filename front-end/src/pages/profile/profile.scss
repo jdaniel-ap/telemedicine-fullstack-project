@@ -59,19 +59,11 @@
         flex-direction: column;
         overflow: hidden;
         gap: 10px;
-        a {
-          text-decoration: none;
-          color: var(--color-primary-font);
-        }
 
         .selected {
           color: white;
           background-color: var(--color-purple);
           transition: 0.2s;
-
-          a {
-            color: white;
-          }
 
           &:hover {
             color: white;
@@ -85,12 +77,10 @@
           font-size: 16px;
           font-weight: 500;
           cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 5px;
 
           &:hover {
             color: var(--color-purple);
+            // color: white;
           }
         }
       }
@@ -99,16 +89,69 @@
 
   section {
     padding: 30px;
+    animation: fade 0.2s linear;
+    display: flex;
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      padding: 50px;
+
+      button {
+        margin: 10px;
+      }
+    }
 
     .welcome-content {
       display: flex;
       flex-direction: column;
       padding: 30px;
+      gap: 20px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 290px;
+        height: 63px;
+        position: relative;
+
+        .edit-icon {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          cursor: pointer;
+        }
+      }
+
+      .profile-input-disable {
+        caret-color: transparent;
+        outline: none;
+        user-select: none;
+      }
+
+      .profile-input,
+      .profile-input-disable {
+        margin: 10px 0;
+        border-radius: 10px;
+        width: 300px;
+        border: 1px #c6c6c6 solid;
+        padding: 10px 15px;
+      }
 
       img {
-        width: 400px;
+        width: 500px;
         margin: auto;
       }
     }
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

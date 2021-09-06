@@ -5,8 +5,11 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = createContext({});
 
 export default function AuthContextProvider(props) {
+  const [asideEvent, setAsideEvent] = useState('');
   const [loginFormValues, setLoginFormValues] = useState({});
-  const [signupValues, setSignupValues] = useState({});
+  const [signupValues, setSignupValues] = useState({
+    medicRole: false,
+  });
   const [signState, setSignState] = useState({
     signIn: false,
     signUp: false,
@@ -19,6 +22,7 @@ export default function AuthContextProvider(props) {
     if (!localStorageToken) return history.push("/");
     const decodeJwt = jwt_decode(localStorageToken);
     const currentDate = new Date();
+
     if (decodeJwt.exp * 1000 < currentDate.getTime()) {
       return history.push("/");
     } else {
@@ -53,7 +57,7 @@ export default function AuthContextProvider(props) {
         medicRole: signupValues.medicRole,
       }),
     };
-    fetch("http://localhost:3000/user", requestOptions)
+    fetch("http://localhost:3001/user", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.message === succesfull) {
@@ -88,10 +92,11 @@ export default function AuthContextProvider(props) {
         password: loginFormValues.password,
       }),
     };
-    fetch("http://localhost:3000/login", requestOptions)
+    fetch("http://localhost:3001/user/login", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.token) {
+          setSignState((prevState) => ({ ...prevState, signIn: false }));
           window.localStorage.setItem("token", JSON.stringify(data.token));
           return history.push("/dashboard");
         }
@@ -108,6 +113,8 @@ export default function AuthContextProvider(props) {
         setSignupValues,
         setSignState,
         validateToken,
+        setAsideEvent,
+        asideEvent,
         signupValues,
         loginFormValues,
         signState,
