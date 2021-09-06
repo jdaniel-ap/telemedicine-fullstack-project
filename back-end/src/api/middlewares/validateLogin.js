@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { code } = require('../helpers/messages');
+const { code } = require('../../helpers/messages');
 const { getUser } = require('../model/usersModel');
 
 const validateUserForm = (data) =>

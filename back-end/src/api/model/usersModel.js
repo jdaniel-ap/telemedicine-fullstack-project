@@ -17,7 +17,22 @@ const getUser = async (data) => {
   return request;
 }
 
+const editUserData = async (data) => {
+  const {iat, exp, ...userData} = data;
+  const request = await connection().then((db) => 
+    db.collection('users').updateOne(
+      { username: data.username}, 
+      { $set: { username: data.username, email: data.email, fullname: data.fullname }}));
+
+    if(request.modifiedCount === 1) {
+      return userData
+    }
+
+  return { message: 'user not able to edit'};
+}
+
 module.exports = {
   registerUser,
-  getUser
+  getUser,
+  editUserData
 }

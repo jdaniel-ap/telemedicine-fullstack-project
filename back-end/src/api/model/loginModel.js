@@ -6,13 +6,14 @@ const jwt = require('jsonwebtoken');
 const SECRET = 'medtools';
 
 const jwtConfig = {
-  expiresIn: process.env.REACT_APP_SECRET,
+  expiresIn: '5m',
   algorithm: process.env.REACT_APP_ALGORITHM,
 };
 
 const signIn = async (data) => {
+  const { username, medicRole, fullname, email } = data;
   const requestToken = await jwt.sign(data, SECRET, jwtConfig);
-  return { token: requestToken }
+  return { token: requestToken, userInfo: { fullname, username, email, medicRole } }
 }
 
 module.exports = signIn

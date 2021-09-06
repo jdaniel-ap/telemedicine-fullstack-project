@@ -9,8 +9,8 @@ app.use(express.json());
 const socketIoServer = require('http').createServer();
 
 app.use(cors());
-app.use(loginRouter);
-app.use(userRouter);
+app.use('/user',loginRouter);
+app.use('/user', userRouter);
 
 
-app.listen(PORT, console.log('app running on port', PORT));
+module.exports = app;

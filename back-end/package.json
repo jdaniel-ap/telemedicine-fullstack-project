@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
+    "dev": "nodemon src/api/server.js",
     "ola": "node test.js"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
     "mongodb": "^4.1.0",
     "socket.io": "^4.1.3"
   },

@@ -1,5 +1,5 @@
-const loginModel = require('../model/loginModel');
-const verifyUserData = require('../services/loginServices')
+const loginModel = require('../api/model/loginModel');
+const verifyUserData = require('../api/services/loginServices')
 
 const loginController = async (req, res) => {
   const request = await verifyUserData({...req.body});

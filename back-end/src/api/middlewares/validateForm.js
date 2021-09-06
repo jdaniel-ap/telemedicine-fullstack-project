@@ -1,12 +1,16 @@
 const Joi = require('joi');
-const { code } = require('../helpers/messages');
+const { code } = require('../../helpers/messages');
 const { getUser } = require('../model/usersModel');
 
 const validateUserForm = (data) =>
   Joi.object({
-    username: Joi.string().min(8).required().messages({
+    username: Joi.string().min(5).required().messages({
       'any.required': '"username" is required',
-      'string.min': '"username" length must be at least 8 characters long',
+      'string.min': '"username" length must be at least 5 characters long',
+    }),
+    fullname: Joi.string().min(6).required().messages({
+      'any.required': '"fullname" is required',
+      'string.min': '"fullname" length must be at least 6 characters long',
     }),
     email: Joi.string().email().required().messages({
       'any.required': '"email" is required',
