@@ -1,4 +1,4 @@
-const userServices = require('../api/services/user');
+const userServices = require('../services/user');
 
 const registerUser = async (req, res) => {
   const data = req.body;
@@ -8,9 +8,9 @@ const registerUser = async (req, res) => {
 }
 
 const editUserData = async (req, res) => {
-  const { body, decoded } = req;
-  console.log(decoded)
-  const request = await userServices.editData(body, decoded);
+  const { body, user } = req;
+  console.log(body)
+  const request = await userServices.editData(body, user);
   res.status(201).json(request)
 
 }

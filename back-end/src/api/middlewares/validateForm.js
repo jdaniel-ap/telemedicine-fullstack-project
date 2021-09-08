@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { code } = require('../../helpers/messages');
+const { code } = require('../helpers/messages');
 const { getUser } = require('../model/usersModel');
 
 const validateUserForm = (data) =>
@@ -27,6 +27,7 @@ const validateUserForm = (data) =>
 const validateForm = async (req, res, next) => {
   const data = req.body;
   const { error } = validateUserForm(data);
+  const errors = require('../utils/errors')
   const findUser = await getUser(data.username);
 
   try {
@@ -35,7 +36,7 @@ const validateForm = async (req, res, next) => {
       throw userInfoResponse;
     }
     if(findUser) {
-      const userInfoResponse = { code: 400, message: 'User already registered' };
+      const userInfoResponse = { code: errors.emailExistErr, message: errors.emailExistErr };
       throw userInfoResponse;
     }
     next();
@@ -44,4 +45,4 @@ const validateForm = async (req, res, next) => {
   }
 };
 
-module.exports = validateForm;
+module.exports = {validateForm};

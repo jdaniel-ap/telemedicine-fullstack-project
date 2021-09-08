@@ -1,0 +1,31 @@
+header {
+  overflow: hidden;
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  border: solid 1px #e7e7e7;
+  justify-content: space-between;
+
+  div {
+    padding-right: 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    span {
+      font-size: 14px;
+      cursor: pointer;
+      color: #3f3f3fda;
+      transition: 0.2s;
+
+      &:hover {
+        color: var(--color-purple);
+      }
+    }
+  }
+  img {
+    width: 180px;
+    padding-left: 20px;
+  }
+}

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import illustrationImg from '../../assets/images/asd3.png';
-import logoImg from '../../assets/images/Untitled.png';
-import '../auth/auth.scss';
+import logoImg from '../../assets/images/newlogo.png';
 import Button from '../../components/Button/Button';
 import { AuthContext } from '../../context/AuthContext';
 import Alert from '../../components/Modal/Alert';
+import '../auth/auth.scss';
 
 function Auth() {
   const { fillFormFields, handleLogin, setSignState, signState } = useContext(AuthContext);

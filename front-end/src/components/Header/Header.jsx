@@ -1,20 +1,22 @@
-import React from 'react';
-import logo from '../../assets/images/Untitled.png';
+import React, { useContext } from 'react';
+import logo from '../../assets/images/newlogo.png';
 import { useHistory } from 'react-router-dom';
+import { AppEventsContext } from '../../context/AppEventsContext';
+import './header.scss';
 
-function Header({asideEvent}) {
+function Header() {
+  const { setAsideEvent } = useContext(AppEventsContext);
   const history = useHistory();
 
   function handleNav() {
-    asideEvent('');
+    setAsideEvent('');
     history.push('/dashboard');
 
   }
 
-
   function logout() {
-    localStorage.removeItem('token');
-    asideEvent('');
+    localStorage.removeItem('user');
+    setAsideEvent('');
     history.push('/');
   }
 

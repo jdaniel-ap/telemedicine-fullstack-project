@@ -1,23 +1,29 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const userModel = require('../model/usersModel');
+const errors = require('../utils/errors');
 
-const jwtSecret = process.env.REACT_APP_SECRET;
+const SECRET = 'medtools';
 
-module.exports = (req, _res, next) => {
-  console.log('validating token..')
+const validateToken = async (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) return next({ error: { statusCode: 401, message: 'Token not found' } });
 
-  try {
-    const decodedData = jwt.verify(token, jwtSecret);
-      req.decoded = decodedData;
-      next();
-  } catch (error) {
-    return next({
-      error: {
-        statusCode: 401,
-        message: 'Expired or invalid token',
-      },
-    });
+  if (!token) {
+   return res.status(401).json({ response: { message: 'missing auth token' }, status: 401 });
   }
+  try {
+    const payload = jwt.verify(token, SECRET);
+    const user = await userModel.getUser(payload.username);
+    
+    if (!user) return { message: errors.incorrectField, status: 401 };
+
+
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(errors.jwtErr.status).json(errors.jwtErr.response);
+  }
+};
+
+module.exports = {
+  validateToken,
 };

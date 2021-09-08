@@ -11,9 +11,9 @@ const jwtConfig = {
 };
 
 const signIn = async (data) => {
-  const { username, medicRole, fullname, email } = data;
+  const { username, medicRole, fullname, email, _id } = data;
   const requestToken = await jwt.sign(data, SECRET, jwtConfig);
-  return { token: requestToken, userInfo: { fullname, username, email, medicRole } }
+  return { token: requestToken, userInfo: { id: _id, fullname, username, email, medicRole } }
 }
 
 module.exports = signIn

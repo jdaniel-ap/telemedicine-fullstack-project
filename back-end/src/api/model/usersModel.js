@@ -17,14 +17,14 @@ const getUser = async (data) => {
   return request;
 }
 
-const editUserData = async (data) => {
-  const {iat, exp, ...userData} = data;
+const editUserData = async (data, token) => {
+  const userData = { token, userInfo: data };
   const request = await connection().then((db) => 
     db.collection('users').updateOne(
       { username: data.username}, 
       { $set: { username: data.username, email: data.email, fullname: data.fullname }}));
-
     if(request.modifiedCount === 1) {
+      console.log(userData)
       return userData
     }
 

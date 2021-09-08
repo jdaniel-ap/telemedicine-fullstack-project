@@ -1,0 +1,22 @@
+.content {
+  table {
+    width: 750px;
+    margin: auto;
+
+    tr th {
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    // tr:nth-child(even) {
+    //   background-color: #c6c6c6;
+    // }
+  }
+}

@@ -1,34 +1,15 @@
 import React, { createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { signUp, login } from "../services/api";
+import { signStateCont, signupStateCont } from "./contextLocalState";
 
 export const AuthContext = createContext({});
 
 export default function AuthContextProvider(props) {
-  const [asideEvent, setAsideEvent] = useState('');
   const [loginFormValues, setLoginFormValues] = useState({});
-  const [signupValues, setSignupValues] = useState({
-    medicRole: false,
-  });
-  const [signState, setSignState] = useState({
-    signIn: false,
-    signUp: false,
-    serverResponse: {},
-  });
+  const [signupValues, setSignupValues] = useState(signupStateCont);
+  const [signState, setSignState] = useState(signStateCont);
   const history = useHistory();
-
-  function validateToken() {
-    const localStorageToken = JSON.parse(localStorage.getItem("token"));
-    if (!localStorageToken) return history.push("/");
-    const decodeJwt = jwt_decode(localStorageToken);
-    const currentDate = new Date();
-
-    if (decodeJwt.exp * 1000 < currentDate.getTime()) {
-      return history.push("/");
-    } else {
-      return decodeJwt;
-    }
-  }
 
   function fillFormFields({ target }, isLogin) {
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -39,69 +20,39 @@ export default function AuthContextProvider(props) {
         [name]: value,
       }));
     }
-
     setSignupValues((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  function handleSignup(e) {
-    const succesfull = "User successfully registered";
+  async function handleSignup(e) {
     e.preventDefault();
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: signupValues.username,
-        fullname: signupValues.fullname,
-        email: signupValues.email,
-        password: signupValues.password,
-        medicRole: signupValues.medicRole,
-      }),
-    };
-    fetch("http://localhost:3001/user", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === succesfull) {
-          setSignupValues({
-            username: "",
-            fullname: "",
-            email: "",
-            password: "",
-            medicRole: false,
-          });
-          return setSignState((prevState) => ({
-            ...prevState,
-            signUp: true,
-            serverResponse: { message: data.message, success: true },
-          }));
-        }
-        setSignState((prevState) => ({
-          ...prevState,
-          signUp: true,
-          serverResponse: { message: data.message, error: true },
-        }));
-      });
+    const succesfull = "User successfully registered";
+    const request = await signUp(signupValues);
+    
+    if(request.message === succesfull) {
+      setSignupValues(signupStateCont);
+
+      return setSignState((prevState) => ({
+        ...prevState,
+        signUp: true,
+        serverResponse: { message: request.message, success: true },
+      }));
+    }
+    setSignState((prevState) => ({
+      ...prevState,
+      signUp: true,
+      serverResponse: { message: request.message, error: true },
+    }));
   }
 
-  function handleLogin(e) {
+ async function handleLogin(e) {
     e.preventDefault();
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: loginFormValues.username,
-        password: loginFormValues.password,
-      }),
-    };
-    fetch("http://localhost:3001/user/login", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.token) {
-          setSignState((prevState) => ({ ...prevState, signIn: false }));
-          window.localStorage.setItem("token", JSON.stringify(data.token));
-          return history.push("/dashboard");
-        }
-        setSignState((prevState) => ({ ...prevState, signIn: true }));
-      });
+    const logRequest = await login(loginFormValues);
+    
+    if(logRequest.token) {
+      window.localStorage.setItem("user", JSON.stringify(logRequest));
+      return history.push("/dashboard");
+    }
+    setSignState((prevState) => ({ ...prevState, signIn: true }));
   }
 
   return (
@@ -112,9 +63,6 @@ export default function AuthContextProvider(props) {
         handleSignup,
         setSignupValues,
         setSignState,
-        validateToken,
-        setAsideEvent,
-        asideEvent,
         signupValues,
         loginFormValues,
         signState,

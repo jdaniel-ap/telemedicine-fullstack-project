@@ -31,3 +31,37 @@
     cursor: not-allowed;
   }
 }
+
+.secondary-btn {
+  border: 1px solid var(--color-purple);
+  margin-top: 64px;
+  height: 50px;
+  border-radius: 8px;
+  font-weight: 500;
+  background-color: var(--color-white);
+  color: var(--color-purple);
+  padding: 0 32px;
+  margin: auto;
+  width: 320px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  img {
+    margin-right: 8px;
+  }
+
+  &:not(:disabled):hover {
+    filter: brightness(0.9);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

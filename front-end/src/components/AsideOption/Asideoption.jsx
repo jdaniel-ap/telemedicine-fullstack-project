@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -9,19 +9,21 @@ import WatchLaterOutlinedIcon from '@material-ui/icons/WatchLaterOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import { SvgIcon } from '@material-ui/core';
+import { AppEventsContext } from '../../context/AppEventsContext';
 
-function Asideoption({ name, state, setState, linkId }) {
+function Asideoption({ name, linkId }) {
+    const { asideEvent, setAsideEvent } = useContext(AppEventsContext)
   const history = useHistory();
   function handleAsideEvent({target}) {
     history.push(linkObj[name])
-    setState(target.innerText);
+    setAsideEvent(target.innerText);
   }
 
   const icons = {
-    Perfil: state === name ? DashboardIcon : DashboardOutlinedIcon,
-    Consultas: state === name ? DescriptionIcon : DescriptionOutlinedIcon,
-    Historial: state === name ? WatchLaterIcon : WatchLaterOutlinedIcon,
-    Configuracion: state === name ? SettingsIcon : SettingsOutlinedIcon,
+    Perfil: asideEvent === name ? DashboardIcon : DashboardOutlinedIcon,
+    Consultas: asideEvent === name ? DescriptionIcon : DescriptionOutlinedIcon,
+    Historial: asideEvent === name ? WatchLaterIcon : WatchLaterOutlinedIcon,
+    Configuracion: asideEvent === name ? SettingsIcon : SettingsOutlinedIcon,
   }
 
   const linkObj = {
@@ -33,14 +35,12 @@ function Asideoption({ name, state, setState, linkId }) {
 
 
   return (
-
       <span
-        className={`${state === name ? 'selected':''} aside-option`}
+        className={`${asideEvent === name ? 'selected':''} aside-option`}
         onClick={(e) => handleAsideEvent(e)}>
         <SvgIcon component={icons[name]} />
         {name}
       </span>
-
   )
 }
 
