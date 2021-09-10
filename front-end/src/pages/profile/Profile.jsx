@@ -1,12 +1,13 @@
 import React, { useState, useEffect,useContext } from 'react';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
+import Aside from '../../components/Aside/Aside';
+import profileImg from '../../assets/images/profileData.svg';
+import Tooltip from '@material-ui/core/Tooltip';
 import { editUserData } from '../../services/api';
 import { useHistory } from 'react-router-dom';
-import profileImg from '../../assets/images/profileData.svg';
 import { AppEventsContext } from '../../context/AppEventsContext';
 import './profile.scss';
-import Aside from '../../components/Aside/Aside';
 
 function Profile() {
   const { userData, setUserData} = useContext(AppEventsContext);
@@ -14,15 +15,16 @@ function Profile() {
   const [editInput, setEditInput] = useState(false);
   const history = useHistory();
 
+
   async function saveChanges() {
     const localStorageValues = JSON.parse(localStorage.getItem("user"));
-    const request = await editUserData(userData, localStorageValues.token);
-    
-    if(request.token) {
-      localStorage.setItem("user", JSON.stringify({ token: localStorageValues.token, userInfo: userData }));
+    const { data } = await editUserData(userData, localStorageValues.token);
+    if(data.token) {
+      console.log(userData)
+      localStorage.setItem("user", JSON.stringify({ token: data.token, userInfo: userData }));
       setEditInput(false);
-      setUserData(request.userInfo);
-    } else if (request.message === "jwt malformed") {
+      setUserData(data.userInfo);
+    } else if (data.message === "jwt malformed") {
       localStorage.removeItem('user');
       history.push('/');
     }
@@ -31,7 +33,6 @@ function Profile() {
   function enableInput(target) {
     setUserValues(userData);
     setEditInput(true);
-    console.log(userData)
   }
 
   function cancelEditData() {
@@ -49,25 +50,27 @@ function Profile() {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setUserData(userData.userInfo);
-  }, [setUserData]);
+  });
 
   return (
     <div className='content'>
       <Header />
       <main>
-        <Aside userId={userData.id} />
+        <Aside />
         <section>
         <h2>Perfil</h2>
         <div className='welcome-content'>
         <div>
             <span>ID</span>
-            <input
-              type="text"
-              name="id"
-              className='profile-input-disable'
-              value={userData.id}
-              readOnly
-            />
+            <Tooltip title="El ID no puede ser editado"> 
+              <input
+                type="text"
+                name="id"
+                className='profile-input-disable'
+                value={userData.id}
+                readOnly
+              />
+            </Tooltip>
           </div>
           <div>
             <span>Nombre</span>

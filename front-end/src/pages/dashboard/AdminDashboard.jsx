@@ -17,7 +17,7 @@ function AdminDashboard() {
     <div className='content'>
       <Header />
       <main>
-      <Aside userId={userData.id} />
+      <Aside />
         <section>
         <h2>
           Hola

@@ -5,7 +5,7 @@
 
   .card {
     width: 240px;
-    height: 200px;
+    height: 220px;
     box-shadow: 0 0.4px 3.6px rgba(0, 0, 0, 0.004),
       0 1px 8.5px rgba(0, 0, 0, 0.01), 0 1.9px 15.7px rgba(0, 0, 0, 0.019),
       0 3.4px 28.2px rgba(0, 0, 0, 0.03), 0 6.3px 54.4px rgba(0, 0, 0, 0.047),
@@ -38,7 +38,6 @@
     }
 
     .card-content {
-      // font-weight: 500;
       padding: 10px 20px;
     }
   }

@@ -1,47 +1,49 @@
-export const signUp = async (signupValues) => {
-  const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: signupValues.username,
-        fullname: signupValues.fullname,
-        email: signupValues.email,
-        password: signupValues.password,
-        medicRole: signupValues.medicRole,
-      }),
-    };
-    const request = await fetch("http://localhost:3001/user", requestOptions)
-    const objRequest = await request.json();
+import axios from 'axios';
 
-    return objRequest
+export const signUp = async (signupValues) => {
+  const { username, fullname, email, password, medicRole } = signupValues;
+  const request = await axios({
+    method: 'post',
+    url: 'http://localhost:3001/user',
+    data: {
+      username,
+      fullname,
+      email,
+      password,
+      medicRole
+    },
+  });
+
+  return request;
 }
 
 export const login = async (loginFormValues) => {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: loginFormValues.username,
-      password: loginFormValues.password,
-    }),
-  };
-  const request = await fetch("http://localhost:3001/user/login", requestOptions);
-  
-  return await request.json();
+  const { username, password } = loginFormValues;
+  const request = await axios({
+    method: 'post',
+    url: 'http://localhost:3001/user/login',
+    data: {
+      username,
+      password,
+    },
+  });
+
+  return request;
 }
 
 export const editUserData = async (userData, token) => {
-  const requestOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json", 'Authorization': token },
-    body: JSON.stringify({
+  const request = await axios({
+    method: 'put',
+    url: 'http://localhost:3001/user/edit',
+    headers: {
+      Authorization: token,
+    },
+    data: {
       username: userData.username,
       email: userData.email,
       fullname: userData.fullname
-    }),
-  };
-
-  const request = await  fetch("http://localhost:3001/user/edit", requestOptions);
-  return await request.json();
+    },
+  });
+  return await request;
 
 }

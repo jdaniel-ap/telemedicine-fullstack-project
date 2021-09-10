@@ -75,7 +75,7 @@ function Signup() {
           <p>Si ya tienes cuenta puedes ingresar <Link to='/' onClick={() => resetForm()}>aqui</ Link></p>
           </form>
         </div>
-        { signState.signUp && <Alert className={signState.serverResponse.success ? 'success' : 'error'}>{signState.serverResponse.message}</Alert>}
+        { signState.signUp && <Alert className={signState.serverResponse.status}>{signState.serverResponse.message}</Alert>}
       </main>
     </div>
   )

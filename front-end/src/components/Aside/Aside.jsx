@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppEventsContext } from '../../context/AppEventsContext';
 import Asideoption from '../AsideOption/Asideoption';
 import './aside.scss';
 
-function Aside({userId}) {
+function Aside() {
+  const { userData } = useContext(AppEventsContext);
   const options = ['Perfil', 'Consultas', 'Historial', 'Configuracion'];
   return (
     <aside>
@@ -12,7 +14,7 @@ function Aside({userId}) {
         <Asideoption 
           name={option}
           key={option}
-          linkId={userId}
+          linkId={userData.id}
         />)}
     </div>
   </aside>

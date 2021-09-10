@@ -8,15 +8,36 @@
       font-weight: 500;
     }
 
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
+    td .finished,
+    .open {
+      background-color: #c0392b;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      display: block;
+      margin: auto;
     }
 
-    // tr:nth-child(even) {
-    //   background-color: #c6c6c6;
-    // }
+    .open {
+      background-color: #27ae60;
+    }
+
+    .status-open {
+      font-weight: 500;
+    }
+
+    .status-closed {
+      color: #838383;
+      &:hover {
+        color: #494949;
+      }
+    }
+
+    td,
+    th {
+      text-align: left;
+      padding: 8px;
+      cursor: pointer;
+    }
   }
 }

@@ -25,31 +25,30 @@ export default function AuthContextProvider(props) {
 
   async function handleSignup(e) {
     e.preventDefault();
-    const succesfull = "User successfully registered";
-    const request = await signUp(signupValues);
+    const { data } = await signUp(signupValues);
     
-    if(request.message === succesfull) {
+    if(data.status === 'success') {
       setSignupValues(signupStateCont);
 
       return setSignState((prevState) => ({
         ...prevState,
         signUp: true,
-        serverResponse: { message: request.message, success: true },
+        serverResponse: { data },
       }));
     }
     setSignState((prevState) => ({
       ...prevState,
       signUp: true,
-      serverResponse: { message: request.message, error: true },
+      serverResponse: { message: data.message, status: data.status },
     }));
   }
 
  async function handleLogin(e) {
     e.preventDefault();
-    const logRequest = await login(loginFormValues);
+    const { data } = await login(loginFormValues);
     
-    if(logRequest.token) {
-      window.localStorage.setItem("user", JSON.stringify(logRequest));
+    if(data.token) {
+      window.localStorage.setItem("user", JSON.stringify(data));
       return history.push("/dashboard");
     }
     setSignState((prevState) => ({ ...prevState, signIn: true }));
