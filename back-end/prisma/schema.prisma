@@ -11,12 +11,65 @@ generator client {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  fullname  String
-  username  String  @unique
-  email     String  @unique
-  password  String
-  medicRole Boolean
+  id       String    @id @default(uuid())
+  username String    @unique
+  email    String    @unique
+  password String
+  role     Role      @default(USER)
+  userData UserData?
+  consult  Consult[]
 
-  @@map("users")
+  @@map("Users")
+}
+
+model UserData {
+  id       String @id @default(cuid())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String @unique
+  fullname String
+  age      Int
+  sex      String
+  race     String
+  height   Float
+  weight   Float
+
+  healthData HealthData?
+
+  @@map("User_data")
+}
+
+model HealthData {
+  id               Int      @id @default(autoincrement())
+  userDataId       String   @unique
+  userData         UserData @relation(fields: [userDataId], references: [id])
+  comorbidity      String
+  isAlergic        Boolean
+  alergics         String   @default("No Alergias")
+  useCigars        Boolean
+  howManyCigars    Int      @default(0)
+  useAlcohol       Boolean
+  howManyAlcohol   String   @default("No alcohol")
+  useDrugs         Boolean
+  howManyDrugs     String   @default("No drogas")
+  useMedication    Boolean
+  whichMedications String   @default("No medicamentos")
+  isPregnant       Boolean  @default(false)
+
+  @@map("Health_data")
+}
+
+model Consult {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  inCharge  String
+  status    String
+  motive    String
+
+}
+
+enum Role {
+  USER
+  MEDIC
 }

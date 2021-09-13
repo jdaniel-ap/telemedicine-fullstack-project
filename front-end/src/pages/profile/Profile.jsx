@@ -20,10 +20,9 @@ function Profile() {
     const localStorageValues = JSON.parse(localStorage.getItem("user"));
     const { data } = await editUserData(userData, localStorageValues.token);
     if(data.token) {
-      console.log(userData)
       localStorage.setItem("user", JSON.stringify({ token: data.token, userInfo: userData }));
       setEditInput(false);
-      setUserData(data.userInfo);
+      setUserData(userData);
     } else if (data.message === "jwt malformed") {
       localStorage.removeItem('user');
       history.push('/');
@@ -33,6 +32,7 @@ function Profile() {
   function enableInput(target) {
     setUserValues(userData);
     setEditInput(true);
+    console.log(userValues)
   }
 
   function cancelEditData() {
@@ -50,7 +50,7 @@ function Profile() {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setUserData(userData.userInfo);
-  });
+  }, []);
 
   return (
     <div className='content'>

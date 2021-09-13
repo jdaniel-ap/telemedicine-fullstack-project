@@ -7,7 +7,9 @@ export function validateToken(req: Request, res: Response, next: NextFunction) {
 
   if(!token) throw new Error("Missing auth token");
   try {
-    verify(token, process.env.SECRET_KEY);
+    const user = verify(token, process.env.SECRET_KEY);
+
+    res.locals.user = user;
 
     return next();
   } catch(err) {

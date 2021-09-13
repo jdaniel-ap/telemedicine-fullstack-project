@@ -3,15 +3,20 @@ import { AuthenticateUserController } from '../controllers/authenticateUserContr
 import { CreateUserController } from '../controllers/createUserController';
 import { UpdateUserController } from '../controllers/updateUserController';
 import { validateToken } from '../middlewares/validateToken';
+import { limiter } from '../middlewares/rateLimit';
+import { InsertUserDataController } from '../controllers/insertUseInfoController';
 
 const userRouter = Router();
 
-const createUserController = new CreateUserController();
-const authenticateUserController = new AuthenticateUserController();
-const updateUserController = new UpdateUserController();
+const createUser = new CreateUserController();
+const authenticateUser = new AuthenticateUserController();
+const updateUser = new UpdateUserController();
+const inserData = new InsertUserDataController();
 
-userRouter.post('/', createUserController.handle);
-userRouter.post('/login', authenticateUserController.handle);
-userRouter.put('/edit', validateToken, updateUserController.handle)
+
+userRouter.post('/sign-up', createUser.handle);
+userRouter.post('/login', limiter, authenticateUser.handle);
+userRouter.put('/edit', validateToken, updateUser.handle);
+userRouter.post('/user-data', validateToken, inserData.handle)
 
 export { userRouter };

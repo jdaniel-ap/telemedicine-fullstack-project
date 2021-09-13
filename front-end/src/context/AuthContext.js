@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { signUp, login } from "../services/api";
+import { signup, login } from "../services/api";
 import { signStateCont, signupStateCont } from "./contextLocalState";
 
 export const AuthContext = createContext({});
@@ -25,7 +25,7 @@ export default function AuthContextProvider(props) {
 
   async function handleSignup(e) {
     e.preventDefault();
-    const { data } = await signUp(signupValues);
+    const { data } = await signup(signupValues);
     
     if(data.status === 'success') {
       setSignupValues(signupStateCont);
@@ -49,6 +49,7 @@ export default function AuthContextProvider(props) {
     
     if(data.token) {
       window.localStorage.setItem("user", JSON.stringify(data));
+      setSignState((prevState) => ({ ...prevState, signIn: false }));
       return history.push("/dashboard");
     }
     setSignState((prevState) => ({ ...prevState, signIn: true }));

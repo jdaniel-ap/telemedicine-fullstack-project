@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const signUp = async (signupValues) => {
+export const signup = async (signupValues) => {
   const { username, fullname, email, password, medicRole } = signupValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:3001/user',
+    url: 'http://localhost:8080/user',
     data: {
       username,
       fullname,
@@ -12,6 +12,11 @@ export const signUp = async (signupValues) => {
       password,
       medicRole
     },
+  }).then(response => { 
+    return response
+  })
+  .catch(error => {
+      return error.response
   });
 
   return request;
@@ -21,12 +26,12 @@ export const login = async (loginFormValues) => {
   const { username, password } = loginFormValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:3001/user/login',
+    url: 'http://localhost:8080/user/login',
     data: {
       username,
       password,
     },
-  });
+  }).catch(err => err.response);
 
   return request;
 }
@@ -34,7 +39,7 @@ export const login = async (loginFormValues) => {
 export const editUserData = async (userData, token) => {
   const request = await axios({
     method: 'put',
-    url: 'http://localhost:3001/user/edit',
+    url: 'http://localhost:8080/user/edit',
     headers: {
       Authorization: token,
     },

@@ -26,7 +26,6 @@ class UpdateUser {
       },
       data: {
         username,
-        fullname,
         email
       },
     });

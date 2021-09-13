@@ -1,0 +1,42 @@
+
+
+export interface IObjUserData {
+  userId: string
+  fullname : string
+  age: number
+  sex: string
+  race: string
+  height: number
+  weight: number
+}
+
+export interface IObjHealthData {
+  comorbidity: string
+  isAlergic: boolean
+  alergics: string
+  useCigars: boolean
+  howMuchCigars: number
+  useAlcohol: boolean
+  howMuchAlcohol: string
+  useDrugs  : boolean
+  howManyDrugs : string
+  useMedication: boolean
+  whichMedication: string
+  isPregnant: boolean
+}
+
+export interface IUserData extends IObjUserData {
+  data : IObjUserData
+}
+
+export interface IUserRequest {
+  fullname: string,
+  username: string,
+  password: string,
+  email: string,
+  medicRole: boolean,
+}
+
+export interface IUserId {
+  id: String
+}
