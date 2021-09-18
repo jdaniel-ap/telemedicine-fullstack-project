@@ -44,14 +44,14 @@ model HealthData {
   userData         UserData @relation(fields: [userDataId], references: [id])
   comorbidity      String
   isAlergic        Boolean
-  alergics         String   @default("No Alergias")
   useCigars        Boolean
-  howManyCigars    Int      @default(0)
-  useAlcohol       Boolean
-  howManyAlcohol   String   @default("No alcohol")
   useDrugs         Boolean
-  howManyDrugs     String   @default("No drogas")
   useMedication    Boolean
+  useAlcohol       Boolean
+  howManyCigars    Int      @default(0)
+  alergics         String   @default("No Alergias")
+  howManyAlcohol   String   @default("No alcohol")
+  howManyDrugs     String   @default("No drogas")
   whichMedications String   @default("No medicamentos")
   isPregnant       Boolean  @default(false)
 
@@ -63,7 +63,7 @@ model Consult {
   createdAt DateTime @default(now())
   user      User?    @relation(fields: [userId], references: [id])
   userId    String
-  inCharge  String
+  medicId   String
   status    String
   motive    String
 

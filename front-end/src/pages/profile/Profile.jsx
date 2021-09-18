@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import Aside from '../../components/Aside/Aside';
@@ -6,14 +6,17 @@ import profileImg from '../../assets/images/profileData.svg';
 import Tooltip from '@material-ui/core/Tooltip';
 import { editUserData } from '../../services/api';
 import { useHistory } from 'react-router-dom';
-import { AppEventsContext } from '../../context/AppEventsContext';
+import { useDispatch, useSelector  } from 'react-redux';
+import { editUser, setUser } from '../../redux/slices/appSlice';
+
 import './profile.scss';
 
 function Profile() {
-  const { userData, setUserData} = useContext(AppEventsContext);
   const [userValues, setUserValues] = useState({});
   const [editInput, setEditInput] = useState(false);
   const history = useHistory();
+  const userData = useSelector(state => state.appEvents.userData);
+  const dispatch = useDispatch();
 
 
   async function saveChanges() {
@@ -22,7 +25,7 @@ function Profile() {
     if(data.token) {
       localStorage.setItem("user", JSON.stringify({ token: data.token, userInfo: userData }));
       setEditInput(false);
-      setUserData(userData);
+      dispatch(setUser(userData));
     } else if (data.message === "jwt malformed") {
       localStorage.removeItem('user');
       history.push('/');
@@ -32,25 +35,25 @@ function Profile() {
   function enableInput(target) {
     setUserValues(userData);
     setEditInput(true);
-    console.log(userValues)
   }
 
   function cancelEditData() {
-    setUserData(userValues);
+    dispatch(setUser(userValues));
     setEditInput(false)
   }
 
 
   function handleUserData({target}) {
     const { name, value } = target;
-
-    setUserData(prevState => ({ ...prevState, [name]: value}))
+    dispatch(editUser({name, value}))
   }
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    setUserData(userData.userInfo);
-  }, []);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(!userData.id) {
+      dispatch(setUser(user.userInfo));
+    }
+  }, [dispatch]);
 
   return (
     <div className='content'>

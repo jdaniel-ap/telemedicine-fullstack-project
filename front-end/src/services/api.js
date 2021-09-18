@@ -4,7 +4,7 @@ export const signup = async (signupValues) => {
   const { username, fullname, email, password, medicRole } = signupValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/user',
+    url: 'http://localhost:8080/api/user/sign-up',
     data: {
       username,
       fullname,
@@ -12,10 +12,11 @@ export const signup = async (signupValues) => {
       password,
       medicRole
     },
-  }).then(response => { 
+  }).then(response => {
     return response
   })
   .catch(error => {
+    console.log(error.response)
       return error.response
   });
 
@@ -26,7 +27,7 @@ export const login = async (loginFormValues) => {
   const { username, password } = loginFormValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/user/login',
+    url: 'http://localhost:8080/api/user/login',
     data: {
       username,
       password,
@@ -39,7 +40,7 @@ export const login = async (loginFormValues) => {
 export const editUserData = async (userData, token) => {
   const request = await axios({
     method: 'put',
-    url: 'http://localhost:8080/user/edit',
+    url: 'http://localhost:8080/api/user/edit',
     headers: {
       Authorization: token,
     },

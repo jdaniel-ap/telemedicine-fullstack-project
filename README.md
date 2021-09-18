@@ -1,40 +1,23 @@
-## This repository contains a fullstack MERN project:
+# React Telemedicine Fullstack project
+
+## Built With
+
+• React • MySQL • Javascript • Typescript • HTML • CSS • Express • Node
+
+## What's inside?
+
+A quick look at the top-level files and directories you'll see in a React project.
+
+    .
+    ├── node_modules
+    ├── src
+    ├── .gitignore
+    ├── .prettierrc
+    ├── package-lock.json
+    ├── package.json
+    └── README.md
 
 ---
-
-- [English](#about-the-project)
-- [Español](#sobre-el-proyecto)
-- [Português](#sobre-o-projeto)
-
-### About the project
-
-The development of this application is for the purpose of implementing the knowledge that I have acquired this last year. I want to implement a complete crud software based on a relational database (MySQL). With _Node / Express_ technology on the server side and _Javascript / React_ on the client side.
-
-Another objective is to offer the software for free to communities where access to the public health system does not exist or is difficult.
-
-### Sobre el proyecto
-
-El desarrollo de esta aplicación tiene el propósito de probar e implementar todos los conocimientos que he adquirido este último año de estudio en Trybe. Quiero diseñar una aplicacion CRUD sobre una base de datos no relacional (MySQL). Con tecnología Node / Express en el lado del servidor y Javascript / React por el lado del cliente.
-
-Otro objetivo es ofrecer el software de forma gratuita a las comunidades donde el acceso al sistema de salud pública es extremadamente dificil.
-
-### Sobre o projeto
-
-O desenvolvimento desta aplicação pretende testar os conhecimentos que adquiri no último ano na Trybe. Quero implementar um CRUD baseado em um banco de dados não relacional (MySQL). Desenvolvido por Node / Express no lado do servidor e Javascript / React no lado do cliente.
-
-Outra meta é oferecer o software gratuitamente para comunidades onde o acesso ao sistema público de saúde não existe ou é difícil.
-
-### Technologies Applied in the Project
-
-- MySQL
-- MongoDB
-- Reactjs
-- Javascript
-- Typescript
-- Express
-- Node
-- Git
-- Prisma ORM
 
 ## API Documentation
 

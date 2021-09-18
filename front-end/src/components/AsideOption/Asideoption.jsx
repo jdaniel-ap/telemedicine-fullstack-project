@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -9,14 +9,18 @@ import WatchLaterOutlinedIcon from '@material-ui/icons/WatchLaterOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import { SvgIcon } from '@material-ui/core';
-import { AppEventsContext } from '../../context/AppEventsContext';
+import { setAsideEvent } from '../../redux/slices/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Asideoption({ name, linkId }) {
-    const { asideEvent, setAsideEvent } = useContext(AppEventsContext)
   const history = useHistory();
+  const dispatch = useDispatch();
+  const asideEvent = useSelector(state => state.appEvents.asideEvents)
+
   function handleAsideEvent({target}) {
-    history.push(linkObj[name])
-    setAsideEvent(target.innerText);
+    dispatch(setAsideEvent(target.innerText));
+    history.push(linkObj[name]);
+    
   }
 
   const icons = {

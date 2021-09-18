@@ -6,6 +6,7 @@ import { IUserRequest } from '../common/types';
 class CreateUser {
 
   async execute({ fullname, username, password, email, medicRole} : IUserRequest) {
+
     const userValues = {
       username, password, email, medicRole
     }
@@ -22,6 +23,7 @@ class CreateUser {
         email
       }
     });
+
 
     if(error) {
       throw new Error(error.details[0].message);
@@ -41,6 +43,7 @@ class CreateUser {
         role: medicRole ? 'MEDIC' : 'USER',
       },
     });
+
 
     return { status: 'success', message: 'You have been successfully registered' };
   }

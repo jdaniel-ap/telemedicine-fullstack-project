@@ -2,25 +2,24 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import illustrationImg from '../../assets/images/register.png';
 import logoImg from '../../assets/images/Untitled.png';
-import './signup.scss';
 import Button from '../../components/Button/Button';
 import { AuthContext } from '../../context/AuthContext';
 import Alert from '../../components/Modal/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetSignup } from '../../redux/slices/authSlice';
+
+import './signup.scss';
 
 function Signup() {
-  const { signupValues, 
-          setSignupValues,
-          signState,
-          fillFormFields,
-          handleSignup,
-          setSignState 
-        } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const globaState = useSelector(state => state.authentication);
+  const {signState, signupValues} = globaState;
+  const { fillFormFields, handleSignup } = useContext(AuthContext);
 
   const resetForm = () => {
-    setSignupValues({ username: '', email: '', password: '', medicRole: false});
-    setSignState(prevState => ({...prevState, signUp: false }));
-
+    dispatch(resetSignup());
   };
+  
   return (
     <div id='page-auth'>
       <aside>

@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { AppEventsContext } from '../../context/AppEventsContext';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Asideoption from '../AsideOption/Asideoption';
+
 import './aside.scss';
 
 function Aside() {
-  const { userData } = useContext(AppEventsContext);
+  const userData = useSelector(state => state.appEvents.userData);
   const options = ['Perfil', 'Consultas', 'Historial', 'Configuracion'];
   return (
     <aside>

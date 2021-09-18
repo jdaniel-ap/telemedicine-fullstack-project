@@ -1,17 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import emptyImg from '../../assets/images/empty.svg';
-import { AppEventsContext } from '../../context/AppEventsContext';
 import Header from '../../components/Header/Header';
-import './adminDashboard.scss';
 import Aside from '../../components/Aside/Aside';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/slices/appSlice';
+
+import './adminDashboard.scss';
 
 function AdminDashboard() {
-  const { userData, setUserData } = useContext(AppEventsContext)
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.appEvents.userData);
 
   useEffect(() => {
     const { userInfo }= JSON.parse(localStorage.getItem("user"));
-    setUserData(userInfo);
-  }, [setUserData])
+    dispatch(setUser(userInfo));
+  }, [dispatch])
 
   return (
     <div className='content'>

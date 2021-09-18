@@ -1,57 +1,50 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import { useHistory } from "react-router-dom";
 import { signup, login } from "../services/api";
-import { signStateCont, signupStateCont } from "./contextLocalState";
+import { useDispatch, useSelector } from "react-redux";
+import { resetSignup, setLoginForm, setSignState, setSignup } from "../redux/slices/authSlice";
 
 export const AuthContext = createContext({});
 
 export default function AuthContextProvider(props) {
-  const [loginFormValues, setLoginFormValues] = useState({});
-  const [signupValues, setSignupValues] = useState(signupStateCont);
-  const [signState, setSignState] = useState(signStateCont);
+  const globalState = useSelector(state => state.authentication);
+  const { signupValues, loginForm } = globalState;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   function fillFormFields({ target }, isLogin) {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     if (isLogin) {
-      return setLoginFormValues((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+      dispatch(setLoginForm({name, value}));
     }
-    setSignupValues((prevState) => ({ ...prevState, [name]: value }));
+    dispatch(setSignup({name, value}));
   }
 
   async function handleSignup(e) {
     e.preventDefault();
     const { data } = await signup(signupValues);
-    
-    if(data.status === 'success') {
-      setSignupValues(signupStateCont);
 
-      return setSignState((prevState) => ({
-        ...prevState,
-        signUp: true,
-        serverResponse: { data },
-      }));
+    if(data.status === 'success') {
+      dispatch(resetSignup());
+      return dispatch(setSignState({signUp: true, signIn: false, serverResponse: { ...data } }));
     }
-    setSignState((prevState) => ({
-      ...prevState,
-      signUp: true,
-      serverResponse: { message: data.message, status: data.status },
+    dispatch(setSignState(
+      {signUp: true, signIn: false, serverResponse: 
+        { message: data.message, status: data.status },
     }));
   }
 
  async function handleLogin(e) {
     e.preventDefault();
-    const { data } = await login(loginFormValues);
+    const { data } = await login(loginForm);
     
     if(data.token) {
       window.localStorage.setItem("user", JSON.stringify(data));
       setSignState((prevState) => ({ ...prevState, signIn: false }));
       return history.push("/dashboard");
     }
+
     setSignState((prevState) => ({ ...prevState, signIn: true }));
   }
 
@@ -61,11 +54,7 @@ export default function AuthContextProvider(props) {
         fillFormFields,
         handleLogin,
         handleSignup,
-        setSignupValues,
         setSignState,
-        signupValues,
-        loginFormValues,
-        signState,
       }}
     >
       {props.children}

@@ -1,22 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from '../../assets/images/newlogo.png';
 import { useHistory } from 'react-router-dom';
-import { AppEventsContext } from '../../context/AppEventsContext';
+import { useDispatch } from 'react-redux';
+import { setAsideEvent } from '../../redux/slices/appSlice';
+
 import './header.scss';
 
 function Header() {
-  const { setAsideEvent } = useContext(AppEventsContext);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   function handleNav() {
-    setAsideEvent('');
+    dispatch(setAsideEvent(''));
     history.push('/dashboard');
 
   }
 
   function logout() {
     localStorage.removeItem('user');
-    setAsideEvent('');
+    dispatch(setAsideEvent(''));
     history.push('/');
   }
 
