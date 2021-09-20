@@ -29,6 +29,23 @@
   .hide-element {
     opacity: 0;
   }
+
+  .primary-btn {
+    background-color: #6c5ce7;
+    color: white;
+    transition: 0.2s ease;
+
+    &:hover {
+      background-color: #6c5ce7;
+      filter: brightness(0.9);
+    }
+  }
+
+  .cancel-btn {
+    &:hover {
+      color: #6c5ce7;
+    }
+  }
 }
 
 @keyframes blop {

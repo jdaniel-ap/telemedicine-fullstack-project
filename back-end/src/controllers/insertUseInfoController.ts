@@ -6,6 +6,7 @@ class InsertUserDataController {
   async handle(req: Request, res: Response) {
     const { id } = res.locals.user;
     const { userData, healthData } = req.body;
+
     const userInfo = {...userData, userId: id};
 
     const insertData = new InsertUserInfo();

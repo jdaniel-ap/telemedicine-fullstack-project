@@ -8,11 +8,17 @@ import './header.scss';
 
 function Header() {
   const history = useHistory();
+  const { userInfo } = JSON.parse(localStorage.getItem('user'));
   const dispatch = useDispatch();
 
-  function handleNav() {
+  const navigator = {
+    home: '/dashboard',
+    info: `/user/health-data/${userInfo.id}`
+  }
+
+  function handleNav({ target }) {
     dispatch(setAsideEvent(''));
-    history.push('/dashboard');
+    history.push(navigator[target.id]);
 
   }
 
@@ -27,8 +33,8 @@ function Header() {
   <header>
     <img src={logo} alt='Medtools'/>
       <div>
-        <span onClick={() => handleNav()}>INICIO</span>
-        <span>PACIENTES EN ESPERA</span>
+        <span onClick={(e) => handleNav(e)} id="home">INICIO</span>
+        <span onClick={(e) => handleNav(e)} id="info">MI INFORMACION MEDICA</span>
         <span>ENVIAR NOTIFICACION</span>
         <span>AYUDA</span>
         <span onClick={logout}>SALIR</span>

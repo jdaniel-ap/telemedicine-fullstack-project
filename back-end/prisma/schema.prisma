@@ -48,11 +48,11 @@ model HealthData {
   useDrugs         Boolean
   useMedication    Boolean
   useAlcohol       Boolean
-  howManyCigars    Int      @default(0)
-  alergics         String   @default("No Alergias")
-  howManyAlcohol   String   @default("No alcohol")
-  howManyDrugs     String   @default("No drogas")
-  whichMedications String   @default("No medicamentos")
+  howManyCigars    String
+  alergics         String
+  howMuchAlcohol   String
+  howManyDrugs     String
+  whichMedications String
   isPregnant       Boolean  @default(false)
 
   @@map("Health_data")

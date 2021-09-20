@@ -1,0 +1,108 @@
+.content {
+  height: auto !important;
+  user-select: none;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .health-content {
+    display: flex;
+    width: 1000px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      height: 80px;
+      position: relative;
+      margin: 0 0 15px 0;
+
+      .edit-icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+      }
+    }
+
+    .health-textarea {
+      width: 100%;
+      height: auto;
+      display: flex;
+    }
+
+    .checkbox-area {
+      width: 90%;
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+
+      .check {
+        width: 30px;
+        margin: auto;
+        color: #6c5ce7;
+      }
+    }
+
+    .profile-input-disable {
+      caret-color: transparent;
+      outline: none;
+      user-select: none;
+      color: #555555;
+    }
+
+    .profile-input,
+    .profile-input-disable,
+    .profile-textarea {
+      margin: 10px 0;
+      border-radius: 10px;
+      width: 300px;
+      border: 1px #c6c6c6 solid;
+      padding: 10px 15px;
+    }
+
+    .profile-textarea {
+      width: 90%;
+      padding: 16px;
+      border-radius: 8px;
+      background-color: #fefefe;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    img {
+      width: 500px;
+      margin: auto;
+    }
+
+    .hide-element-check {
+      opacity: 0;
+      transition: 0.2s;
+      height: 0;
+      margin: 0;
+      width: 0;
+    }
+
+    .show-element-check {
+      opacity: 1;
+      height: auto;
+      transition: 0.2s;
+      width: 295px;
+    }
+  }
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+      border-radius: 10px;
+    }
+  }
+}

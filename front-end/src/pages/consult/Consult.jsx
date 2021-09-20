@@ -1,6 +1,5 @@
 import React from 'react';
 import Aside from '../../components/Aside/Aside';
-import ConsultCards from '../../components/ConsultCards/ConsultCards';
 import Header from '../../components/Header/Header';
 import './consult.scss';
 
@@ -13,7 +12,7 @@ function Consult() {
       <Aside />
         <section>
           <h2>Consultas</h2>
-          <ConsultCards />
+          {/* <ConsultCards /> */}
         </section>
       </main>
     </div>

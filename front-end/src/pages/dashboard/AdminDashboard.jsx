@@ -20,7 +20,7 @@ function AdminDashboard() {
     <div className='content'>
       <Header />
       <main>
-      <Aside />
+        <Aside />
         <section>
         <h2>
           Hola

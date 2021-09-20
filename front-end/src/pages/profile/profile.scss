@@ -37,6 +37,7 @@
       button {
         width: 300px;
         margin: 10px;
+        border-radius: 10px;
       }
     }
 
@@ -51,6 +52,7 @@
         flex-direction: column;
         width: 290px;
         height: 63px;
+        margin-bottom: 10px;
         position: relative;
 
         .edit-icon {

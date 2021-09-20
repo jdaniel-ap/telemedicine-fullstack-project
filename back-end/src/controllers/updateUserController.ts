@@ -7,7 +7,7 @@ class UpdateUserController {
     const updateUser = new UpdateUser();
 
     const user = await updateUser.execute(body);
-    console.log(user)
+
     res.status(201).json(user);
 
   }

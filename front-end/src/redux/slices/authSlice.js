@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signStateDefault, signupStateDefault } from '../initialStates';
+import { signStateDefault, signupStateDefault } from '../defaultStates';
 
 const initialState = {
   loginForm: {},

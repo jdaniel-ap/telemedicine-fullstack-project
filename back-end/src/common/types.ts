@@ -15,13 +15,13 @@ export interface IObjHealthData {
   isAlergic: boolean
   alergics: string
   useCigars: boolean
-  howMuchCigars: number
   useAlcohol: boolean
+  howManyCigars: string
   howMuchAlcohol: string
   useDrugs  : boolean
   howManyDrugs : string
   useMedication: boolean
-  whichMedication: string
+  whichMedications: string
   isPregnant: boolean
 }
 

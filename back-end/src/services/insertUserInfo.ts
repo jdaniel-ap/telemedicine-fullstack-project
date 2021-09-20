@@ -3,10 +3,11 @@ import { IObjUserData, IObjHealthData } from '../common/types'
 
 class InsertUserInfo {
   
-  async execute(userInfo : IObjUserData, healthInfo : IObjHealthData) {
+  async execute(userData : IObjUserData, healthInfo : IObjHealthData) {
+
     const findUser = await client.user.findFirst({
       where: {
-        id: userInfo.userId
+        id: userData.userId
       }
     });
 
@@ -14,14 +15,14 @@ class InsertUserInfo {
 
     await client.userData.create({
       data: {
-        ...userInfo,
+        ...userData,
         healthData: {
           create: {
             ...healthInfo
           }
         }
       }
-    })
+    });
 
     return { status: 'success', message: 'You have been successfully registered' };
   }

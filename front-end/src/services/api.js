@@ -53,3 +53,35 @@ export const editUserData = async (userData, token) => {
   return await request;
 
 }
+
+export const setUserDataRequest = async (data, token) => {
+  const { userData, healthData } = data;
+  console.log(userData)
+
+  const request = await axios({
+    method: 'post',
+    url: 'http://localhost:8080/api/user/user-data',
+    headers: {
+      Authorization: token,
+    },
+    data: {
+      userData,
+      healthData
+    },
+  }).catch(err => err.response);
+
+  return request;
+}
+
+export const getUserDataRequest = async (token) => {
+
+  const request = await axios({
+    method: 'get',
+    url: 'http://localhost:8080/api/user/user-data/health',
+    headers: {
+      Authorization: token,
+    },
+  }).catch(err => err.response);
+
+  return request;
+}
