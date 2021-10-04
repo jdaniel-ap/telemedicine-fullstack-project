@@ -1,0 +1,52 @@
+.avatar {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.header-icon-btn {
+  font-size: 20px;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+
+  div {
+    padding-top: 4px;
+  }
+}
+
+main {
+  section {
+    .medic-dashboard-title {
+      font-weight: 400;
+      letter-spacing: normal;
+    }
+    .consult-dashboard-details {
+      border: solid 1px #c6c6c6;
+      border-radius: 10px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 75%;
+
+      .box {
+        display: flex;
+        gap: 5vh;
+      }
+
+      .details-box {
+        display: flex;
+        flex-direction: column;
+
+        .pacient-details {
+          font-size: 20px;
+          color: #797979;
+          border-bottom: 1px solid rgb(196, 196, 196);
+        }
+      }
+    }
+  }
+}

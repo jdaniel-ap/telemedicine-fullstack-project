@@ -6,6 +6,7 @@ import Alert from '../../components/Modal/Alert';
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext';
 import { useSelector } from 'react-redux';
+// import { CircularProgress } from '@material-ui/core';
 
 import '../auth/auth.scss';
 

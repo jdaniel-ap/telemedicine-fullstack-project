@@ -54,7 +54,7 @@ function Profile() {
     if (!userData.id) {
       dispatch(setUser(user.userInfo));
     }
-  }, [dispatch]);
+  }, [dispatch, userData.id]);
 
   return (
     <div className="content">

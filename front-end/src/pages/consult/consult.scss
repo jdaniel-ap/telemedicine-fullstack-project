@@ -1,4 +1,37 @@
 .content {
   user-select: none;
   height: auto !important;
+
+  .consult {
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  textarea {
+    width: 90%;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #fefefe;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    resize: vertical;
+    min-height: 130px;
+    resize: none;
+  }
+
+  input {
+    margin: 10px 0;
+    border-radius: 10px;
+    width: 300px;
+    border: 1px #c6c6c6 solid;
+    padding: 10px 15px;
+  }
+
+  .disable-input {
+    caret-color: transparent;
+    outline: none;
+    user-select: none;
+    color: #555555;
+  }
 }

@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 import Alert from '../../components/Modal/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetSignup } from '../../redux/slices/authSlice';
+import {  CircularProgress  } from '@material-ui/core';
 
 import './signup.scss';
 
@@ -24,19 +25,12 @@ function Signup() {
     <div id='page-auth'>
       <aside>
         <img src={ illustrationImg } alt='simbolize a question' />
-        <p>Registrate en Medtools y facilita la gestion tu tiempo</p>
+        <p>{signState.serverResponse.message ? 'Tu registro ha sido exitoso, ahora dirigete a la pagina de inicio' : 'Registrate en Medtools y facilita la gestion tu tiempo'}</p>
       </aside>
       <main>
         <div className='main-content'>
           <img src={ logoImg } alt='Consult' />
           <form action=''>
-            <input 
-              type='text'
-              name='fullname'
-              placeholder='Nombres'
-              value={signupValues.fullname}
-              onChange={(e) => fillFormFields(e)}
-            />
             <input 
               type='text'
               name='username'
@@ -69,7 +63,7 @@ function Signup() {
               ></input>
             </div> 
             <Button onClick={(e) => handleSignup(e)}>
-              Registrarse
+              {signState.signUp ? <CircularProgress color="inherit" /> : 'Registrarse'}
             </Button>
           <p>Si ya tienes cuenta puedes ingresar <Link to='/' onClick={() => resetForm()}>aqui</ Link></p>
           </form>

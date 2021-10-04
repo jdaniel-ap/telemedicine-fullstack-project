@@ -5,18 +5,20 @@ import Header from "../../components/Header/Header";
 import { Checkbox } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  resetUserData,
+  resetData,
   setDefaultData,
   setHealthData,
   setUserData,
 } from "../../redux/slices/updateDataSlice";
 import { setUserDataRequest, getUserDataRequest } from "../../services/api";
+import useLogout from '../../hooks/useLogout';
 
 import "./mainData.scss";
 
 function MainData() {
   const [editInput, setEditInput] = useState(false);
-  const [defaultState, setDefaultState] = useState({});
+  const [defaultState, setDefaultState] = useState({ userData: {}, healthData: {}});
+  const [logout] = useLogout()
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.userMedicData);
   const { userData, healthData } = globalState;
@@ -26,7 +28,12 @@ function MainData() {
   }`;
 
   const sendRequest = async () => {
-    await setUserDataRequest(globalState, token);
+   const { data } = await setUserDataRequest(globalState, token);
+
+   if(data.status === 'success') {
+    setEditInput(false);
+   }
+
   };
 
   const handleHealthData = ({ target }) => {
@@ -36,6 +43,7 @@ function MainData() {
 
   const handleUserData = ({ target }) => {
     const { value, name, type } = target;
+    console.log(value)
     dispatch(setUserData({ name, value, type }));
   };
 
@@ -47,15 +55,23 @@ function MainData() {
   const disableEditInput = () => {
     setEditInput(false);
 
-    dispatch(resetUserData({ defaultState }));
+    dispatch(setDefaultData({ healthData, userData:  defaultState.userData}));
   };
 
   useEffect(() => {
     async function getData() {
-      const { data } = await getUserDataRequest(token);
-      const { healthData, ...basicData } = data;
-      const { id, userId, ...basicUserData } = basicData;
-      dispatch(setDefaultData({ healthData, userData: basicUserData }));
+      const request = await getUserDataRequest(token);
+      if(request.status === 400) {
+        logout();
+      }
+      if(request.data && request.status === 200 ) {
+        console.log('entro')
+        const { healthData, ...basicData } = request.data;
+        const { id, userId, ...basicUserData } = basicData;
+        dispatch(setDefaultData({ healthData, userData: basicUserData }));
+      } else {
+        dispatch(resetData())
+      }
     }
     if (!userData.id) {
       getData();

@@ -1,56 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Aside from '../../components/Aside/Aside';
 import Tooltip from '@material-ui/core/Tooltip';
 import './history.scss';
+import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { getUserConsults } from '../../services/api';
 
 function History() {
+  const history = useHistory();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const { token } = JSON.parse(localStorage.getItem('user'))
+    async function fetchConsult() {
+      const { data } = await getUserConsults(token);
+      setData(data);
+      console.log(data)
+    }
+    
+    fetchConsult()
+  }, []);
+
   return (
     <div className="content">
       <Header />
       <main>
         <Aside />
-        <section style={{textAlign: 'left'}}>
+        <section style={{textAlign: 'center'}}>
         <table>
           <tbody>
 
           <tr>
             <th>Status</th>
-            <th>Paciente</th>
-            <th>Email</th>
+            <th>Identificador</th>
+            <th>Medico</th>
             <th>Fecha</th>
             <th>Motivo</th>
           </tr>
-          <tr className="status-closed">
-            <td><Tooltip title="Consulta terminada"><span className="finished"></span></Tooltip></td>
-            <td>Alfreds Futterkiste</td>
-            <td>Futterskiste@yahoo.ger</td>
-            <td>11/05/2020</td>
-            <td>Chequeo</td>
-          </tr>
-          <tr className="status-closed">
-          <td><Tooltip title="Consulta terminada"><span className="finished"></span></Tooltip></td>
-            <td>Francisco Chang</td>
-            <td>Moctezuma_1996@hotmail.com</td>
-            <td>20/05/2020</td>
-            <td>Examenes</td>
-          </tr>
-          <tr className="status-closed">
-          <td><Tooltip title="Consulta terminada"><span className="finished"></span></Tooltip></td>
-            <td>Ernst Handel</td>
-            <td>ernestohandel2000@outlook.com</td>
-            <td>21/07/2020</td>
-            <td>Molestia</td>
-          </tr>
-          <tr className="status-open">
-          <td><Tooltip title="Consulta abierta"><span className="open"></span></Tooltip></td>
-            <td>Helen Bennett</td>
-            <td>helencool@gmail.com</td>
-            <td>30/09/2020</td>
-            <td>Molestia</td>
-          </tr>
+          {data.map(row => (
+            <tr className="status-open" key={row.id}>
+              <td><Tooltip title="Consulta en proceso"><span className={row.status}></span></Tooltip></td>
+              <td>{row.id}</td>
+              <Tooltip title={row.medicId}><td>{row.medicId.split('-')[0]}...</td></Tooltip>
+              <td>{row.createdAt.split('T')[0]}</td>
+              <Tooltip title={row.motive} ><td>{`${row.motive.split(' ')[0]} ${row.motive.split(' ')[1]}...`}</td></Tooltip>
+              <td><Button onClick={() => history.push(`/dashboard/consult/pacient/chat/${row.id}`)}>Ver más</Button></td>
+            </tr>
+          ))}
           </tbody>
         </table>
+        <Button className="btn primary-btn" style={{ margin: 'auto'}} onClick={() => history.push('/dashboard/consult/generate')}>Nueva consulta</Button>
         </section>
       </main>
     </div>

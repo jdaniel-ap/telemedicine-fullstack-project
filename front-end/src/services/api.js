@@ -85,3 +85,34 @@ export const getUserDataRequest = async (token) => {
 
   return request;
 }
+
+export const generateConsult = async (data, token) => {
+  const request = await axios({
+    method: 'post',
+    url: 'http://localhost:8080/api/user/new/consult',
+    headers: {
+      Authorization: token,
+    },
+    data: {
+      ...data
+    }
+  });
+
+  return request.data;
+  
+}
+
+export const getUserConsults = async (token) => {
+
+  const request = await axios({
+    method: 'get',
+    url: 'http://localhost:8080/api/user/consult/pacient',
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  console.log(request.data)
+
+  return request;
+}

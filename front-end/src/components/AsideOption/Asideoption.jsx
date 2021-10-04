@@ -1,16 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import DescriptionIcon from '@material-ui/icons/Description';
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import WatchLaterOutlinedIcon from '@material-ui/icons/WatchLaterOutlined';
-import SettingsIcon from '@material-ui/icons/Settings';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import { SvgIcon } from '@material-ui/core';
 import { setAsideEvent } from '../../redux/slices/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { LocalHospital, LocalHospitalOutlined, DashboardOutlined, Dashboard, Description, DescriptionOutlined } from '@material-ui/icons';
 
 function Asideoption({ name, linkId }) {
   const history = useHistory();
@@ -24,17 +17,16 @@ function Asideoption({ name, linkId }) {
   }
 
   const icons = {
-    Perfil: asideEvent === name ? DashboardIcon : DashboardOutlinedIcon,
-    Consultas: asideEvent === name ? DescriptionIcon : DescriptionOutlinedIcon,
-    Historial: asideEvent === name ? WatchLaterIcon : WatchLaterOutlinedIcon,
-    Configuracion: asideEvent === name ? SettingsIcon : SettingsOutlinedIcon,
+    Perfil: asideEvent === name ? Dashboard : DashboardOutlined,
+    Historia: asideEvent === name ? Description : DescriptionOutlined,
+    Consulta: asideEvent === name ? LocalHospital : LocalHospitalOutlined,
   }
 
   const linkObj = {
-    Perfil: `/dashboard/profile/${linkId}`,
-    Consultas: `/dashboard/consult/${linkId}`,
-    Historial: `/dashboard/history/${linkId}`,
-    Configuracion: `/dashboard/config/${linkId}`
+    Perfil: `/dashboard/profile/`,
+    Historia: `/dashboard/health-data/`,
+    Consulta: `/dashboard/consult/`,
+    Configuracion: `/dashboard/config/`
   }
 
 

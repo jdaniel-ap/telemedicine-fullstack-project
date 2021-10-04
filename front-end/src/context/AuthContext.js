@@ -23,14 +23,21 @@ export default function AuthContextProvider(props) {
 
   async function handleSignup(e) {
     e.preventDefault();
+    
+    dispatch(setSignState(
+      {signUp: true, signIn: false, serverResponse: 
+        { message: '', status: ''},
+    }));
+
+
     const { data } = await signup(signupValues);
 
     if(data.status === 'success') {
       dispatch(resetSignup());
-      return dispatch(setSignState({signUp: true, signIn: false, serverResponse: { ...data } }));
+      return dispatch(setSignState({signUp: false, signIn: false, serverResponse: { ...data } }));
     }
     dispatch(setSignState(
-      {signUp: true, signIn: false, serverResponse: 
+      {signUp: false, signIn: false, serverResponse: 
         { message: data.message, status: data.status },
     }));
   }

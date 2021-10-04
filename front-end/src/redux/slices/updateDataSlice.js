@@ -27,10 +27,13 @@ const slice = createSlice({
     resetUserData(_state, { payload }) {
       const { userData, healthData } = payload.defaultState;
       return {userData, healthData}
+    },
+    resetData() {
+      return {...basicUserDataDefault}
     }
   }
 });
 
-export const { setUserData, setHealthData, setDefaultData, resetUserData } = slice.actions;
+export const { setUserData, setHealthData, setDefaultData, resetUserData, resetData } = slice.actions;
 
 export default slice.reducer;

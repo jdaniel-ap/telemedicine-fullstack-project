@@ -38,5 +38,14 @@ export interface IUserRequest {
 }
 
 export interface IUserId {
-  id: String
+  id: string
 }
+
+export interface consultRequest {
+  userId: string,
+  medicId: string,
+  status: string,
+  motive: string
+}
+
+

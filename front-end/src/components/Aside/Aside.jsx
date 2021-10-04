@@ -6,7 +6,7 @@ import './aside.scss';
 
 function Aside() {
   const userData = useSelector(state => state.appEvents.userData);
-  const options = ['Perfil', 'Consultas', 'Historial', 'Configuracion'];
+  const options = ['Perfil', 'Historia', 'Consulta'];
   return (
     <aside>
     <span>Personal</span>
