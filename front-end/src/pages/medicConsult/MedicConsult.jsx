@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tooltip, CircularProgress } from '@material-ui/core/';
-import { SmokingRooms, LocalBar, ScatterPlot } from '@material-ui/icons/';
+import { Tooltip } from '@material-ui/core/';
 
 import Header from '../../components/Header/Header';
 import Chat from '../../components/Chat/chat';
@@ -8,19 +7,20 @@ import Chat from '../../components/Chat/chat';
 import { getPacientData } from '../../services/api';
 import { useParams } from "react-router-dom";
 
-import { FormControlLabel, Checkbox } from '@material-ui/core'
+import { FormControlLabel, Checkbox, Button } from '@material-ui/core'
 
 import './medicConsult.scss';
 
 function MedicConsult() {
   const [pacientInfo, setpacientInfo] = useState({pacientData: {}, healthData: { isAlergic: null, useAlcohol: null, useCigars: null }});
   const { pacientData, healthData } = pacientInfo;
-  const [load, setLoad] = useState(false);
-  const { pacient, id } = useParams();
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  // const [load, setLoad] = useState(false);
+  const { pacient } = useParams();
 
   useEffect(() => {
     const pacientRequest = async () => {
-      const { data } = await getPacientData(pacient);
+      const { data } = await getPacientData(pacient, token);
 
       const {  healthData, ...info } = data;
 
@@ -32,7 +32,7 @@ function MedicConsult() {
   }, []);
 
   useEffect(() => {
-    setLoad(true)
+    // setLoad(true)
   }, [pacientData])
 
   return (
@@ -62,7 +62,7 @@ function MedicConsult() {
           <span className="pacient-details">{pacientData.weight}kg</span>
         </div>
         <div className="details-box">
-          <span>ICM</span>
+          <span>IMC</span>
           <span className="pacient-details">{(pacientData.weight/Math.pow(pacientData.height, 2)).toFixed(2)} Kg/m2</span>
         </div>
       </div>
@@ -75,6 +75,10 @@ function MedicConsult() {
         <div className="details-box">
           <span>Raza</span>
           <span className="pacient-details">{pacientData.race}</span>
+        </div>
+        <div className="details-box">
+          <span>Status</span>
+          <span className="pacient-details">En espera</span>
         </div>
       </div>
 
@@ -104,7 +108,8 @@ function MedicConsult() {
         <div className="details-box">
           <span>Comorbidades</span>
           <span className="pacient-details">{healthData.comorbidity}</span>
-      </div>
+        </div>
+
       
     </div>
 

@@ -3,10 +3,26 @@ import { client } from '../prisma/client';
 
 
 export class GetPacientData {
-  async execute(pacientId) {
+  pacientId: string;
+  medicId: string;
+
+  constructor(pacientId: string, medicId) {
+    this.pacientId = pacientId;
+    this.medicId = medicId;
+  }
+
+  async execute() {
+    const doctorHasTheCase = await client.consult.findFirst({
+      where: {
+        medicId: this.medicId
+      }
+    });
+
+    if(!doctorHasTheCase) throw new Error('You do not have permission to access this data');
+
     const request = await client.userData.findFirst({
       where: {
-        userId: pacientId
+        userId: this.pacientId
       },
       include: {
         healthData: true

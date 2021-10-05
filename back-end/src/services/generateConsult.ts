@@ -3,11 +3,17 @@ import { client } from '../prisma/client';
 import { createRoom } from '../model/chat';
 
 export class GenerateConsult {
-  async execute(consult: consultRequest) {
+  consult: consultRequest;
+
+  constructor(consult: consultRequest) {
+    this.consult = consult
+  }
+
+  async execute() {
 
     const user = await client.user.findFirst({
       where: {
-        id: consult.medicId
+        id: this.consult.medicId
       }
     });
 
@@ -17,11 +23,9 @@ export class GenerateConsult {
 
     const request = await client.consult.create({
       data: {
-        ...consult
+        ...this.consult
       }
     });
-
-    console.log(request);
 
     await createRoom(request)
     

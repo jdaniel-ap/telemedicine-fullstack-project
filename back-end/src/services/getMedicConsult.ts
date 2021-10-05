@@ -3,10 +3,15 @@ import { client } from '../prisma/client';
 
 
 export class GetMedicConsult {
-  async execute(id : IUserId) {
+  id: string;
+  
+  constructor(id : string) {
+    this.id = id;
+  }
+  async execute() {
     const request = await client.consult.findMany({
       where: {
-        medicId: String(id)
+        medicId: this.id
       }
     });
 

@@ -14,7 +14,7 @@ export const socketChat = (io : socketIO.Server) => {
   });
 
   socket.on('message', (data) => {
-    io.to(data.room).emit('response', data);
+    io.to(data.room).emit('message', data);
   })
 });
 } 

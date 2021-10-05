@@ -7,9 +7,9 @@ export class GetPacientConsultController {
 
     const { id } = res.locals.user;
 
-    const getPacientConsult = new GetPacientConsult();
+    const getPacientConsult = new GetPacientConsult(id);
 
-    const request = await getPacientConsult.execute(id);
+    const request = await getPacientConsult.execute();
 
     res.status(200).json(request);
   }

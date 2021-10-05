@@ -1,25 +1,29 @@
+import { IRequest } from './../common/types';
 import { client } from "../prisma/client";
 import { compare } from "bcryptjs";
 import { sign } from 'jsonwebtoken';
 import 'dotenv/config';
 
-interface IRequest {
-  username: string,
-  password: string,
-}
-
 class AuthenticateUser {
-  async execute({ username, password } : IRequest) {
+  username: string;
+  password: string;
+
+  constructor({username, password} : IRequest) {
+    this.username = username;
+    this.password = password;
+  }
+
+  async execute() {
 
     const userAlreadyExist = await client.user.findFirst({
       where: {
-        username
+        username: this.username
       }
     });
 
     if(!userAlreadyExist) throw new Error('Invalid user or email');
 
-    const passwordMatch = await compare(password, userAlreadyExist.password);
+    const passwordMatch = await compare(this.password, userAlreadyExist.password);
 
     if(!passwordMatch) throw new Error('Invalid user or email');
 

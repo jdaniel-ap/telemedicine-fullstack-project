@@ -131,14 +131,14 @@ export const getMedicConsults = async (token) => {
   return request;
 }
 
-export const getPacientData = async (pacientId) => {
+export const getPacientData = async (pacientId, token) => {
 
   const request = await axios({
     method: 'get',
     url: `http://localhost:8080/api/user/consult/medic/pacientData/${pacientId}`,
-    // headers: {
-    //   Authorization: token,
-    // },
+    headers: {
+      Authorization: token,
+    },
   }).catch(err => err.response);
 
   console.log(request)

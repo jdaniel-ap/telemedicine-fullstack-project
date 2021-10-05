@@ -9,9 +9,9 @@ class InsertUserDataController {
 
     const userInfo = {...userData, userId: id};
 
-    const insertData = new InsertUserInfo();
+    const insertData = new InsertUserInfo(userInfo, healthData);
 
-    const user = await insertData.execute(userInfo, healthData)
+    const user = await insertData.execute()
 
     res.status(201).json(user)
   }

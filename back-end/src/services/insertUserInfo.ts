@@ -2,12 +2,19 @@ import { client } from "../prisma/client";
 import { IObjUserData, IObjHealthData } from '../common/types'
 
 class InsertUserInfo {
+  userData: IObjUserData;
+  healthInfo: IObjHealthData;
+
+  constructor(userData: IObjUserData, healthInfo: IObjHealthData) {
+    this.userData = userData;
+    this.healthInfo = healthInfo;
+  }
   
-  async execute(userData : IObjUserData, healthInfo : IObjHealthData) {
+  async execute() {
 
     const findUser = await client.user.findFirst({
       where: {
-        id: userData.userId
+        id: this.userData.userId
       }
     });
 
@@ -15,10 +22,10 @@ class InsertUserInfo {
 
     await client.userData.create({
       data: {
-        ...userData,
+        ...this.userData,
         healthData: {
           create: {
-            ...healthInfo
+            ...this.healthInfo
           }
         }
       }

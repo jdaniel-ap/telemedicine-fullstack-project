@@ -43,7 +43,7 @@ function MedicDashboard() {
               <Tooltip title={row.userId}><td>{row.medicId.split('-')[0]}...</td></Tooltip>
               <td>{row.createdAt.split('T')[0]}</td>
               <Tooltip title={row.motive} ><td>{`${row.motive.split(' ')[0]} ${row.motive.split(' ')[1]}...`}</td></Tooltip>
-              <td><Button onClick={() => history.push(`/consult/medic/chat/${row.id}/${row.userId}`)}>Ver más</Button></td>
+              <td><Button onClick={() => history.push(`/consult/medic/chat/${row.id}/${row.userId}`)}>Aceptar consulta</Button></td>
             </tr>
           ))}
           </tbody>

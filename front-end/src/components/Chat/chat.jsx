@@ -65,7 +65,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.emit("join_room", id);
-    socket.emit("join", { room: id, user: userInfo.username });
+    socket.emit("message", { room: id, user: userInfo.username });
   }, []);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const Chat = () => {
   //   setUsers((state) => [...state, data]);
   // });
 
-  socket.off("response").on("response", (data) => {
+  socket.off("message").on("message", (data) => {
     setHistory((state) => [...state, data]);
   });
 

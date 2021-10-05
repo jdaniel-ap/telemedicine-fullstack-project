@@ -4,9 +4,9 @@ import { UpdateUser } from '../services/updateUser';
 class UpdateUserController {
   async handle(req: Request, res: Response, next: NextFunction) {
     const { body } = req
-    const updateUser = new UpdateUser();
+    const updateUser = new UpdateUser(body);
 
-    const user = await updateUser.execute(body);
+    const user = await updateUser.execute();
 
     res.status(201).json(user);
 

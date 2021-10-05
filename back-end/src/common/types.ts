@@ -1,3 +1,4 @@
+import { Role } from ".prisma/client";
 
 
 export interface IObjUserData {
@@ -37,6 +38,14 @@ export interface IUserRequest {
   medicRole: boolean,
 }
 
+export interface IUser {
+  username: string,
+  password: string,
+  email: string,
+  role: Role,
+}
+
+
 export interface IUserId {
   id: string
 }
@@ -47,5 +56,11 @@ export interface consultRequest {
   status: string,
   motive: string
 }
+
+export interface IRequest {
+  username: string,
+  password: string,
+}
+
 
 

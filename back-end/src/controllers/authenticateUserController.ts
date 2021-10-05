@@ -4,11 +4,12 @@ class AuthenticateUserController {
   async handle(req: Request, res: Response) {
     const { body } = req;
 
-    const authenticateUser = new AuthenticateUser();
+    const authenticateUser = new AuthenticateUser(body);
 
-    const token = await authenticateUser.execute(body);
+    const user = await authenticateUser.execute();
 
-    return res.status(200).json(token);
+
+    return res.status(200).json(user);
   }
 }
 

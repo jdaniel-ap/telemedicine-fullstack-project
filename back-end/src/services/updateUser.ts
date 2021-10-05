@@ -9,10 +9,20 @@ interface IUserUpdateRequest {
 }
 
 class UpdateUser {
-  async execute({ username, fullname, email } : IUserUpdateRequest) {
+  username: string;
+  fullname: string;
+  email: string;
+
+  constructor({ username, fullname, email } : IUserUpdateRequest) {
+    this.username = username;
+    this.fullname = fullname;
+    this.email = email;
+  }
+
+  async execute() {
     const userAlreadyExist = await client.user.findFirst({
       where: {
-        email,
+        email: this.email,
       }
     });
 
@@ -22,11 +32,11 @@ class UpdateUser {
 
     const user = await client.user.update({
       where: {
-        email,
+        email: this.email,
       },
       data: {
-        username,
-        email
+        username: this.username,
+        email: this.email
       },
     });
 

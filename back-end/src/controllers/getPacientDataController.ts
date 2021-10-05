@@ -5,10 +5,12 @@ import { Request, Response } from 'express';
 export class GetPacientDataController {
   async handle(req: Request, res: Response) {
     const { body, params } = req;
-    
-    const getPacientData = new GetPacientData();
 
-    const pacientData = await getPacientData.execute(params.id);
+    const { id } = res.locals.user;
+    
+    const getPacientData = new GetPacientData(params.id, id);
+
+    const pacientData = await getPacientData.execute();
 
     res.status(200).json(pacientData);
   }

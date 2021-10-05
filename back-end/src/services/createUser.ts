@@ -1,26 +1,41 @@
 import { client } from '../prisma/client';
 import { hash } from 'bcryptjs';
 import Joi from 'joi';
-import { IUserRequest } from '../common/types';
+import { IUserRequest, IUser } from '../common/types';
 
 class CreateUser {
+  fullname: string;
+  username: string;
+  password: string;
+  email: string;
+  medicRole: boolean; 
 
-  async execute({ fullname, username, password, email, medicRole} : IUserRequest) {
+  constructor({ username, password, email, medicRole} : IUserRequest) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.medicRole = medicRole;
+  }
 
-    const userValues = {
-      username, password, email, medicRole
+  async execute() {
+
+    const userValues: IUser = {
+      username: this.username,
+      password: this.password,
+      email: this.email,
+      role: this.medicRole ? 'MEDIC' : 'USER',
     }
 
     const { error } = this.validateUserForm(userValues);
 
     const userAlreadyExist = await client.user.findFirst({ 
       where: {
-        username
+        username: this.username
     }});
 
     const emailAlreadyExist = await client.user.findFirst({
       where: {
-        email
+        email: this.email
       }
     });
 
@@ -33,14 +48,13 @@ class CreateUser {
       throw new Error('User or Email already exist');
     }
 
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await hash(this.password, 8);
+
+    userValues.password = passwordHash;
 
     const user = await client.user.create({
       data: {
-        username,
-        password: passwordHash,
-        email,
-        role: medicRole ? 'MEDIC' : 'USER',
+        ...userValues
       },
     });
 
@@ -62,7 +76,7 @@ class CreateUser {
       'string.min': '"password" length must be 6 characters long',
       'any.required': '"password" is required',
     }),
-    medicRole: Joi.required().messages({
+    role: Joi.required().messages({
     }),
   }).validate(data);
 
