@@ -9,7 +9,7 @@ export const socketChat = (io : socketIO.Server) => {
   });
 
   socket.on('join', data => {
-    console.log(data)
+    // console.log(data)
     io.to(data.room).emit('response', {user: data.user});
   });
 

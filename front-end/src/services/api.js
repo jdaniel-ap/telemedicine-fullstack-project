@@ -116,3 +116,33 @@ export const getUserConsults = async (token) => {
 
   return request;
 }
+
+export const getMedicConsults = async (token) => {
+  const request = await axios({
+    method: 'get',
+    url: 'http://localhost:8080/api/user/consult/medic',
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  console.log(request.data)
+
+  return request;
+}
+
+export const getPacientData = async (pacientId) => {
+
+  const request = await axios({
+    method: 'get',
+    url: `http://localhost:8080/api/user/consult/medic/pacientData/${pacientId}`,
+    // headers: {
+    //   Authorization: token,
+    // },
+  }).catch(err => err.response);
+
+  console.log(request)
+
+  return request;
+}
+

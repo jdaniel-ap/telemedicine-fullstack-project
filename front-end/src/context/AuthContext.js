@@ -49,7 +49,11 @@ export default function AuthContextProvider(props) {
     if(data.token) {
       window.localStorage.setItem("user", JSON.stringify(data));
       setSignState((prevState) => ({ ...prevState, signIn: false }));
-      return history.push("/dashboard");
+      
+      if(data.userInfo.role === 'USER') return history.push("/dashboard");
+
+
+      return history.push("/dashboard/medic");
     }
 
     setSignState((prevState) => ({ ...prevState, signIn: true }));

@@ -65,7 +65,6 @@ function MainData() {
         logout();
       }
       if(request.data && request.status === 200 ) {
-        console.log('entro')
         const { healthData, ...basicData } = request.data;
         const { id, userId, ...basicUserData } = basicData;
         dispatch(setDefaultData({ healthData, userData: basicUserData }));

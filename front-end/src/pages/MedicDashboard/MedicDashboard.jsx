@@ -1,96 +1,53 @@
-import React from 'react';
-import logo from '../../assets/images/newlogo.png';
-import { Avatar, IconButton, Tooltip, Button } from '@material-ui/core/';
-import {Settings, Notifications, ExitToApp, SmokingRooms, LocalBar, ScatterPlot } from '@material-ui/icons/';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import './medicDashboard.scss';
+import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { getMedicConsults } from '../../services/api';
 
 function MedicDashboard() {
+  const history = useHistory();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const { token } = JSON.parse(localStorage.getItem('user'))
+    async function fetchConsult() {
+      const { data } = await getMedicConsults(token);
+      setData(data);
+      console.log(data)
+    }
+    
+    fetchConsult()
+  }, []);
+
   return (
     <div className="content">
-      <header className='new-header'>
-      <div>
-        <img src={logo} alt="medtools" />
-        <div>
-          <span>Consultas</span>
-          <span>Historial</span>
-          <span>Ayuda</span>
-        </div>
-      </div>
-      <div>
-        <div style={{ display: 'flex', padding: '10px'}}>
-
-        <IconButton>
-          <Settings style={{ fontSize: '25px', margin: '0px'}} />
-        </IconButton>
-        <IconButton>
-          <Notifications style={{ fontSize: '25px'}} />
-        </IconButton>
-        <Tooltip title='Salir'>
-          <IconButton>
-            <ExitToApp style={{ fontSize: '25px'}} />
-          </IconButton>
-        </Tooltip>
-        </div>
-        <Avatar className="avatar" style={{backgroundColor: '#ee5253'}}>N</Avatar>
-      </div>
-      </header>
+      <Header />
       <main>
-        <section>
-          <h2 className="medic-dashboard-title">Ultima consulta</h2>
-          <div className="consult-dashboard-details">
-            <div className="details-box">
-                <span>Referencia</span>
-              <Tooltip title='click para copiar'>
-                <span className="pacient-details">e0a9254f-3a6d-48f6-a2b6-9e8...</span>
-              </Tooltip>
-            </div>
-            <div className="details-box">
-              <span>Nombre</span>
-              <span className="pacient-details">Jose Daniel Arreaza</span>
-            </div>
-            <div className="box">
-              <div className="details-box">
-                <span>Altura</span>
-                <span className="pacient-details">1.90m</span>
-              </div>
-              <div className="details-box">
-                <span>Peso</span>
-                <span className="pacient-details">90kg</span>
-              </div>
-              <div className="details-box">
-                <span>ICM</span>
-                <span className="pacient-details">26 Kg/m2</span>
-              </div>
-            </div>
-            <div className="box">
-              <div className="details-box">
-                <Tooltip title='Fumador'>
-                  <SmokingRooms style={{ fontSize: '35px', margin: '5px 30px 0px 0', cursor: 'pointer'}} />
-                </Tooltip>
-              </div>
-              <div className="details-box">
-                <Tooltip title='Alergico'>
-                  <ScatterPlot style={{ fontSize: '35px', margin: '5px 30px 0px 0', cursor: 'pointer'}}  />
-                </Tooltip>
-              </div>
-              <div className="details-box">
-              <Tooltip title='Consume Alcoghol'>
-                <LocalBar style={{ fontSize: '35px', margin: '5px 30px 0px 0', cursor: 'pointer'}}  />
-              </Tooltip>
-              </div>
-            </div>
-            <div className="details-box">
-              <span>Motivo de consulta</span>
-              <span className="pacient-details">Doctor tengo una molestia en el ano, no puedo echar una cagaita</span>
-            </div>
-            <Button className="primary-btn">
-              Entrar
-            </Button>
-          </div>
-        </section>
-        <section>
+        <section style={{textAlign: 'center'}}>
+        <table>
+          <tbody>
 
+          <tr>
+            <th>Status</th>
+            <th>Identificador</th>
+            <th>Paciente</th>
+            <th>Fecha</th>
+            <th>Motivo</th>
+          </tr>
+          {data.map(row => (
+            <tr className="status-open" key={row.id}>
+              <td><Tooltip title="Consulta en proceso"><span className={row.status}></span></Tooltip></td>
+              <td>{row.id}</td>
+              <Tooltip title={row.userId}><td>{row.medicId.split('-')[0]}...</td></Tooltip>
+              <td>{row.createdAt.split('T')[0]}</td>
+              <Tooltip title={row.motive} ><td>{`${row.motive.split(' ')[0]} ${row.motive.split(' ')[1]}...`}</td></Tooltip>
+              <td><Button onClick={() => history.push(`/consult/medic/chat/${row.id}/${row.userId}`)}>Ver más</Button></td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
         </section>
       </main>
     </div>

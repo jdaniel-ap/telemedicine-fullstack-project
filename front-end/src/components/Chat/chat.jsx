@@ -9,6 +9,8 @@ import SendIcon from "@material-ui/icons/Send";
 import socket from "../../services/socket";
 import { useParams } from "react-router-dom";
 
+import './chat.scss';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -21,7 +23,7 @@ const useStyles = makeStyles({
   },
   messageArea: {
     height: "60vh",
-    width: "90%",
+    width: "95%",
     overflowY: "auto",
   },
 });
@@ -32,7 +34,7 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [history, setHistory] = useState([]);
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const { id } = useParams();
   const scrollRef = useRef(null);
 
@@ -62,24 +64,26 @@ const Chat = () => {
   }, [chat]);
 
   useEffect(() => {
-    console.log(id);
     socket.emit("join_room", id);
     socket.emit("join", { room: id, user: userInfo.username });
   }, []);
 
-  socket.off("join").on("join", (data) => {
-    setUsers((state) => [...state, data]);
-  });
+  useEffect(() => {
+
+  }, []);
+
+  // socket.off("join").on("join", (data) => {
+  //   setUsers((state) => [...state, data]);
+  // });
 
   socket.off("response").on("response", (data) => {
     setHistory((state) => [...state, data]);
-    console.log(data);
   });
 
   socket.on("sendMessage", (orderEvent) => {});
 
   return (
-    <div>
+    <div className="chat-box">
       <Grid>
         <Grid item xs={12}>
           <List className={classes.messageArea}>
@@ -115,12 +119,12 @@ const Chat = () => {
               )
             )}
           </List>
-          <form style={{}} onSubmit={(e) => handleChat(e)}>
+          <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '15px'}} onSubmit={(e) => handleChat(e)}>
             <input
               type="text"
               onChange={(e) => handleMessage(e)}
               value={message}
-              style={{ width: "85%", marginRight: "20px" }}
+              style={{ width: "85%", marginRight: "5px" }}
             />
             <Fab color="primary" aria-label="add" type="submit">
               <SendIcon />

@@ -12,6 +12,7 @@ import { theme } from './utils'
 import MedicDashboard from './pages/MedicDashboard/MedicDashboard';
 import Consult from './pages/consult/Consult';
 import PacientConsult from './pages/pacientConsult/pacientConsult';
+import MedicConsult from './pages/medicConsult/MedicConsult';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path='/dashboard/consult/generate' component={ Consult } />
             <Route path='/dashboard/consult/' component={ History } />
             <Route path='/dashboard/medic' component={ MedicDashboard } />
+            <Route path='/consult/medic/chat/:id/:pacient/' component={ MedicConsult } />
           </Switch>
         </AuthContextProvider>
       </ThemeProvider>

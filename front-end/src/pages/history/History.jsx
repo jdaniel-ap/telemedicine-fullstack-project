@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Aside from '../../components/Aside/Aside';
 import Tooltip from '@material-ui/core/Tooltip';
-import './history.scss';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getUserConsults } from '../../services/api';
+
+import './history.scss';
 
 function History() {
   const history = useHistory();
