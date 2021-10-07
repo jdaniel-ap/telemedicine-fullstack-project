@@ -1,7 +1,6 @@
 import { IUserId } from './../common/types';
 import { client } from '../prisma/client';
 
-
 export class GetUserInfo {
   id: string;
 

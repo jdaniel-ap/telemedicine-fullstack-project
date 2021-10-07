@@ -10,7 +10,7 @@ import {
   setHealthData,
   setUserData,
 } from "../../redux/slices/updateDataSlice";
-import { setUserDataRequest, getUserDataRequest } from "../../services/api";
+import { setUserDataRequest, getUserDataRequest, updateUserData } from "../../services/api";
 import useLogout from '../../hooks/useLogout';
 
 import "./mainData.scss";
@@ -28,13 +28,20 @@ function MainData() {
   }`;
 
   const sendRequest = async () => {
-   const { data } = await setUserDataRequest(globalState, token);
-
-   if(data.status === 'success') {
-    setEditInput(false);
+   if(!healthData.fullname) {
+    const { data } = await updateUserData(globalState, token);
+    checkRequest(data.status)
    }
-
+    const { data } = await setUserDataRequest(globalState, token);
+    checkRequest(data.status)
+   
   };
+
+  const checkRequest = (status) => {
+    if(status === 'success') {
+      setEditInput(false);
+     }
+  }
 
   const handleHealthData = ({ target }) => {
     const { value, checked, name, type } = target;
@@ -55,7 +62,7 @@ function MainData() {
   const disableEditInput = () => {
     setEditInput(false);
 
-    dispatch(setDefaultData({ healthData, userData:  defaultState.userData}));
+    dispatch(setDefaultData(defaultState));
   };
 
   useEffect(() => {

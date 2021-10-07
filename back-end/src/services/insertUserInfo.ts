@@ -1,3 +1,4 @@
+import { FindUser } from './../utils/FindUser';
 import { client } from "../prisma/client";
 import { IObjUserData, IObjHealthData } from '../common/types'
 
@@ -12,13 +13,11 @@ class InsertUserInfo {
   
   async execute() {
 
-    const findUser = await client.user.findFirst({
-      where: {
-        id: this.userData.userId
-      }
-    });
+    const findUser = new FindUser(this.userData.userId);
 
-    if(!findUser) throw new Error('User doesn\'t exist')
+    const user = findUser.byId();
+
+    if(!user) throw new Error('User doesn\'t exist')
 
     await client.userData.create({
       data: {
@@ -31,7 +30,7 @@ class InsertUserInfo {
       }
     });
 
-    return { status: 'success', message: 'You have been successfully registered' };
+    return { status: 'success', message: 'Your data have been successfully updated' };
   }
 }
 

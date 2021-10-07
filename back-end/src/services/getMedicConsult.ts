@@ -1,6 +1,4 @@
-import { IUserId } from './../common/types';
 import { client } from '../prisma/client';
-
 
 export class GetMedicConsult {
   id: string;
@@ -8,6 +6,7 @@ export class GetMedicConsult {
   constructor(id : string) {
     this.id = id;
   }
+
   async execute() {
     const request = await client.consult.findMany({
       where: {

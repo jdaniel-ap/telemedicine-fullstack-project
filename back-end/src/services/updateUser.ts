@@ -1,3 +1,4 @@
+import { FindUser } from './../utils/FindUser';
 import { client } from "../prisma/client";
 import { sign } from 'jsonwebtoken';
 import 'dotenv/config';
@@ -6,33 +7,35 @@ interface IUserUpdateRequest {
   username?: string,
   fullname?: string,
   email?: string,
+  id?: string,
 }
 
 class UpdateUser {
   username: string;
   fullname: string;
   email: string;
+  id: string;
 
-  constructor({ username, fullname, email } : IUserUpdateRequest) {
+  constructor({ username, fullname, email, id } : IUserUpdateRequest) {
     this.username = username;
     this.fullname = fullname;
     this.email = email;
+    this.id = id;
   }
 
   async execute() {
-    const userAlreadyExist = await client.user.findFirst({
+
+    const findUser = new FindUser(this.id);
+
+    const user = await findUser.byId();
+    
+    if(!user) throw new Error('data error');
+
+    const { password: _, ...userData} = user;
+
+    await client.user.update({
       where: {
-        email: this.email,
-      }
-    });
-
-    const { password: _, ...userData} = userAlreadyExist;
-
-    if(!userAlreadyExist) throw new Error('data error');
-
-    const user = await client.user.update({
-      where: {
-        email: this.email,
+        id: this.id,
       },
       data: {
         username: this.username,
@@ -41,13 +44,11 @@ class UpdateUser {
     });
 
     const token =  sign(userData, process.env.SECRET_KEY, {
-      subject: userAlreadyExist.id,
+      subject: user.id,
       expiresIn: '5m',
     });
 
-
     return { token, userInfo: {...userData}}
-
   }
 }
 

@@ -1,3 +1,4 @@
+import { FindUser } from '../utils/FindUser';
 import { consultRequest, IUserId } from './../common/types';
 import { client } from '../prisma/client';
 import { createRoom } from '../model/chat';
@@ -11,11 +12,9 @@ export class GenerateConsult {
 
   async execute() {
 
-    const user = await client.user.findFirst({
-      where: {
-        id: this.consult.medicId
-      }
-    });
+    const findUser = new FindUser(this.consult.medicId);
+
+    const user = await findUser.byId();
 
     if(!user) throw new Error('User doesn\'t exist');
 
@@ -27,7 +26,7 @@ export class GenerateConsult {
       }
     });
 
-    await createRoom(request)
+    await createRoom(request);
     
     return { status: 'success', message: 'request processed successfully' };
   }

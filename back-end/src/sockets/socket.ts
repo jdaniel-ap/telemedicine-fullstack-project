@@ -1,3 +1,4 @@
+import { UpdateConsultStatus } from './../services/updateConsultStatus';
 import socketIO from 'socket.io';
 
 export const socketChat = (io : socketIO.Server) => {
@@ -15,6 +16,14 @@ export const socketChat = (io : socketIO.Server) => {
 
   socket.on('message', (data) => {
     io.to(data.room).emit('message', data);
-  })
+  });
+
+  socket.on('consult_status', (data) => {
+    const updateStatus = new UpdateConsultStatus(data);
+    updateStatus.execute();
+
+    io.emit('consult_status');
+
+  });
 });
 } 

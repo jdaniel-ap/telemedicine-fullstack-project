@@ -1,3 +1,4 @@
+import { FindUser } from '../utils/FindUser';
 import { client } from '../prisma/client';
 import { hash } from 'bcryptjs';
 import Joi from 'joi';
@@ -25,13 +26,11 @@ class CreateUser {
       email: this.email,
       role: this.medicRole ? 'MEDIC' : 'USER',
     }
+    const findUser = new FindUser(this.username);
+
+    const user = await findUser.byUsername();
 
     const { error } = this.validateUserForm(userValues);
-
-    const userAlreadyExist = await client.user.findFirst({ 
-      where: {
-        username: this.username
-    }});
 
     const emailAlreadyExist = await client.user.findFirst({
       where: {
@@ -39,12 +38,11 @@ class CreateUser {
       }
     });
 
-
     if(error) {
       throw new Error(error.details[0].message);
     }
 
-    if(userAlreadyExist || emailAlreadyExist) {
+    if(user || emailAlreadyExist) {
       throw new Error('User or Email already exist');
     }
 
@@ -52,7 +50,7 @@ class CreateUser {
 
     userValues.password = passwordHash;
 
-    const user = await client.user.create({
+    await client.user.create({
       data: {
         ...userValues
       },

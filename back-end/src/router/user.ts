@@ -1,3 +1,4 @@
+import { UpdateUserInfoController } from './../controllers/updateUserInfoController';
 import { GetMedicConsultController } from './../controllers/getMedicConsultController';
 import { GetPacientConsultController } from './../controllers/getPacientConsultsController';
 import { GenerateConsultController } from './../controllers/generateConsultController';
@@ -22,11 +23,13 @@ const generateConsult = new GenerateConsultController();
 const getPacientConsults = new GetPacientConsultController();
 const getMedicConsults = new GetMedicConsultController();
 const getPacientData = new GetPacientDataController();
+const updateUserInfo = new UpdateUserInfoController();
 
 
 userRouter.post('/sign-up', createUser.handle);
 userRouter.post('/login', limiter, authenticateUser.handle);
 userRouter.put('/edit', validateToken, updateUser.handle);
+userRouter.post('/user-data/update', validateToken, updateUserInfo.handle)
 userRouter.post('/user-data', validateToken, inserData.handle);
 userRouter.get('/user-data/health', validateToken, findUserInfo.handle);
 userRouter.post('/new/consult', validateToken, generateConsult.handle);

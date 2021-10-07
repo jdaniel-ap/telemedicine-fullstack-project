@@ -1,6 +1,4 @@
-import { IUserId } from './../common/types';
 import { client } from '../prisma/client';
-
 
 export class GetPacientData {
   pacientId: string;

@@ -47,7 +47,8 @@ export const editUserData = async (userData, token) => {
     data: {
       username: userData.username,
       email: userData.email,
-      fullname: userData.fullname
+      fullname: userData.fullname,
+      id: userData.id,
     },
   });
   return await request;
@@ -72,6 +73,25 @@ export const setUserDataRequest = async (data, token) => {
 
   return request;
 }
+
+export const updateUserData = async (data, token) => {
+  const { userData, healthData } = data;
+  const { id, userDataId, ...userHealthData } = healthData;
+  const request = await axios({
+    method: 'post',
+    url: 'http://localhost:8080/api/user/user-data/update',
+    headers: {
+      Authorization: token,
+    },
+    data: {
+      userData,
+      userHealthData
+    },
+  }).catch(err => err.response);
+
+  return request;
+}
+
 
 export const getUserDataRequest = async (token) => {
 

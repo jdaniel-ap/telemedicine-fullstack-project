@@ -10,8 +10,9 @@
 
     td .finished,
     .open,
-    .wait {
-      background-color: #c0392b;
+    .wait,
+    .closed {
+      background-color: #727272;
       border-radius: 50%;
       width: 15px;
       height: 15px;
@@ -21,11 +22,12 @@
 
     .wait {
       background-color: #f1c40f;
-      animation: pulse 2s infinite;
+      animation: waitPulse 2s infinite;
     }
 
     .open {
       background-color: #27ae60;
+      animation: openPulse 2s infinite;
     }
 
     .status-open {
@@ -48,7 +50,24 @@
   }
 }
 
-@keyframes pulse {
+@keyframes waitPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 177, 66, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+  }
+}
+
+@keyframes openPulse {
   0% {
     transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(255, 177, 66, 0.7);

@@ -5,10 +5,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getMedicConsults } from '../../services/api';
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../../redux/slices/consultSlice';
 
 function MedicDashboard() {
   const history = useHistory();
   const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const { token } = JSON.parse(localStorage.getItem('user'))
@@ -20,6 +23,12 @@ function MedicDashboard() {
     
     fetchConsult()
   }, []);
+
+  function handleConsult(row) {
+    console.log(row);
+    dispatch(setStatus(row.status));
+    history.push(`/consult/medic/chat/${row.id}/${row.userId}`)
+  }
 
   return (
     <div className="content">
@@ -43,7 +52,7 @@ function MedicDashboard() {
               <Tooltip title={row.userId}><td>{row.medicId.split('-')[0]}...</td></Tooltip>
               <td>{row.createdAt.split('T')[0]}</td>
               <Tooltip title={row.motive} ><td>{`${row.motive.split(' ')[0]} ${row.motive.split(' ')[1]}...`}</td></Tooltip>
-              <td><Button onClick={() => history.push(`/consult/medic/chat/${row.id}/${row.userId}`)}>Aceptar consulta</Button></td>
+              <td><Button onClick={() => handleConsult(row)}>Aceptar consulta</Button></td>
             </tr>
           ))}
           </tbody>
