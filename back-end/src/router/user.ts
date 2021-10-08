@@ -1,3 +1,4 @@
+import { GetChatHistoryController } from './../controllers/getChatHistoryController';
 import { UpdateUserInfoController } from './../controllers/updateUserInfoController';
 import { GetMedicConsultController } from './../controllers/getMedicConsultController';
 import { GetPacientConsultController } from './../controllers/getPacientConsultsController';
@@ -24,6 +25,7 @@ const getPacientConsults = new GetPacientConsultController();
 const getMedicConsults = new GetMedicConsultController();
 const getPacientData = new GetPacientDataController();
 const updateUserInfo = new UpdateUserInfoController();
+const getChatHistory = new GetChatHistoryController();
 
 
 userRouter.post('/sign-up', createUser.handle);
@@ -36,5 +38,6 @@ userRouter.post('/new/consult', validateToken, generateConsult.handle);
 userRouter.get('/consult/pacient', validateToken, getPacientConsults.handle);
 userRouter.get('/consult/medic', validateToken, getMedicConsults.handle);
 userRouter.get('/consult/medic/pacientData/:id', validateToken, getPacientData.handle);
+userRouter.get('/consult/chat/history/:id', validateToken, getChatHistory.handle);
 
 export { userRouter };

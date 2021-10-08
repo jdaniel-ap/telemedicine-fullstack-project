@@ -6,7 +6,7 @@ export class UpdateUserInfoController {
     const { body } = req;
     const { id } = res.locals.user;
 
-    const updateUserInfo = new UpdateUserInfo(body.userData, body.healthData, id);
+    const updateUserInfo = new UpdateUserInfo(body.userData, body.userHealthData, id);
 
     const update = await updateUserInfo.execute();
 

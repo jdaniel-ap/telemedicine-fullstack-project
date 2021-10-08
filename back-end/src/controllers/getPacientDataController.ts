@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 
 export class GetPacientDataController {
   async handle(req: Request, res: Response) {
-    const { body, params } = req;
+    const { params } = req;
 
     const { id } = res.locals.user;
     

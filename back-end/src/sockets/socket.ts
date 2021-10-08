@@ -1,3 +1,4 @@
+import { updateChatHistory } from './../model/chat';
 import { UpdateConsultStatus } from './../services/updateConsultStatus';
 import socketIO from 'socket.io';
 
@@ -14,7 +15,10 @@ export const socketChat = (io : socketIO.Server) => {
     io.to(data.room).emit('response', {user: data.user});
   });
 
-  socket.on('message', (data) => {
+  socket.on('message', async (data) => {
+    if(data.message) {
+      await updateChatHistory(data);
+    }
     io.to(data.room).emit('message', data);
   });
 
