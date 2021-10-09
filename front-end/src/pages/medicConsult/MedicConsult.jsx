@@ -34,6 +34,8 @@ function MedicConsult() {
 
     }
     pacientRequest();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -42,7 +44,9 @@ function MedicConsult() {
 
   useEffect(() => {
     const consultId = Number(id)
-    socket.emit('consult_status', {consultId , consultStatus})
+    socket.emit('consult_status', {consultId , consultStatus});
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consultStatus])
 
   return (

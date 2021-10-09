@@ -4,7 +4,7 @@ export const signup = async (signupValues) => {
   const { username, fullname, email, password, medicRole } = signupValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/api/user/sign-up',
+    url: 'https://medtools.herokuapp.com/api/user/sign-up',
     data: {
       username,
       fullname,
@@ -16,7 +16,7 @@ export const signup = async (signupValues) => {
     return response
   })
   .catch(error => {
-    console.log(error.response)
+
       return error.response
   });
 
@@ -27,7 +27,7 @@ export const login = async (loginFormValues) => {
   const { username, password } = loginFormValues;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/api/user/login',
+    url: 'https://medtools.herokuapp.com/api/user/login',
     data: {
       username,
       password,
@@ -40,7 +40,7 @@ export const login = async (loginFormValues) => {
 export const editUserData = async (userData, token) => {
   const request = await axios({
     method: 'put',
-    url: 'http://localhost:8080/api/user/edit',
+    url: 'https://medtools.herokuapp.com/api/user/edit',
     headers: {
       Authorization: token,
     },
@@ -57,11 +57,10 @@ export const editUserData = async (userData, token) => {
 
 export const setUserDataRequest = async (data, token) => {
   const { userData, healthData } = data;
-  console.log(userData)
 
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/api/user/user-data',
+    url: 'https://medtools.herokuapp.com/api/user/user-data',
     headers: {
       Authorization: token,
     },
@@ -79,7 +78,7 @@ export const updateUserData = async (data, token) => {
   const { id, userDataId, ...userHealthData } = healthData;
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/api/user/user-data/update',
+    url: 'https://medtools.herokuapp.com/api/user/user-data/update',
     headers: {
       Authorization: token,
     },
@@ -89,6 +88,8 @@ export const updateUserData = async (data, token) => {
     },
   }).catch(err => err.response);
 
+  console.log(request)
+
   return request;
 }
 
@@ -97,7 +98,7 @@ export const getUserDataRequest = async (token) => {
 
   const request = await axios({
     method: 'get',
-    url: 'http://localhost:8080/api/user/user-data/health',
+    url: 'https://medtools.herokuapp.com/api/user/user-data/health',
     headers: {
       Authorization: token,
     },
@@ -109,7 +110,7 @@ export const getUserDataRequest = async (token) => {
 export const generateConsult = async (data, token) => {
   const request = await axios({
     method: 'post',
-    url: 'http://localhost:8080/api/user/new/consult',
+    url: 'https://medtools.herokuapp.com/api/user/new/consult',
     headers: {
       Authorization: token,
     },
@@ -126,13 +127,11 @@ export const getUserConsults = async (token) => {
 
   const request = await axios({
     method: 'get',
-    url: 'http://localhost:8080/api/user/consult/pacient',
+    url: 'https://medtools.herokuapp.com/api/user/consult/pacient',
     headers: {
       Authorization: token,
     },
   });
-
-  console.log(request.data)
 
   return request;
 }
@@ -140,13 +139,11 @@ export const getUserConsults = async (token) => {
 export const getMedicConsults = async (token) => {
   const request = await axios({
     method: 'get',
-    url: 'http://localhost:8080/api/user/consult/medic',
+    url: 'https://medtools.herokuapp.com/api/user/consult/medic',
     headers: {
       Authorization: token,
     },
   });
-
-  console.log(request.data)
 
   return request;
 }
@@ -155,14 +152,27 @@ export const getPacientData = async (pacientId, token) => {
 
   const request = await axios({
     method: 'get',
-    url: `http://localhost:8080/api/user/consult/medic/pacientData/${pacientId}`,
+    url: `https://medtools.herokuapp.com/api/user/consult/medic/pacientData/${pacientId}`,
     headers: {
       Authorization: token,
     },
   }).catch(err => err.response);
 
-  console.log(request)
-
   return request;
 }
+
+export const getChatHistory = async (roomId, token) => {
+
+  const request = await axios({
+    method: 'get',
+    url: `https://medtools.herokuapp.com/api/user/consult/chat/history/${roomId}`,
+    headers: {
+      Authorization: token,
+    },
+  }).catch(err => err.response);
+
+  return request.data.messages;
+}
+
+
 

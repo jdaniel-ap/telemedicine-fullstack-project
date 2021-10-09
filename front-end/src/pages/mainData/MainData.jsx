@@ -16,12 +16,12 @@ import useLogout from '../../hooks/useLogout';
 import "./mainData.scss";
 
 function MainData() {
-  const [editInput, setEditInput] = useState(false);
-  const [defaultState, setDefaultState] = useState({ userData: {}, healthData: {}});
-  const [logout] = useLogout()
-  const dispatch = useDispatch();
   const globalState = useSelector((state) => state.userMedicData);
   const { userData, healthData } = globalState;
+  const [editInput, setEditInput] = useState(false);
+  const [defaultState, setDefaultState] = useState({ userData, healthData });
+  const [logout] = useLogout()
+  const dispatch = useDispatch();
   const { token } = JSON.parse(localStorage.getItem("user"));
   const enableEditField = `${
     editInput ? "profile-input" : "profile-input-disable"
@@ -82,6 +82,7 @@ function MainData() {
     if (!userData.id) {
       getData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

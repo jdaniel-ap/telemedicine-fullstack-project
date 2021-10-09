@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:8080');
+const socket = io('ws://medtools.herokuapp.com/');
 
 export default socket;

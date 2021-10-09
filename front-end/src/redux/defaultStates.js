@@ -14,12 +14,12 @@ export const signupStateDefault = {
 
 export const basicUserDataDefault = {
   userData: {
-		fullname: null,
-		age: null,
-		sex: null,
-		race: null,
-		height: null,
-		weight: null,
+		fullname: '',
+		age: '',
+		sex: '',
+		race: '',
+		height: '',
+		weight: '',
   },
   healthData: {
     comorbidity: "",

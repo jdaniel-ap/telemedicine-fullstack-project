@@ -10,6 +10,7 @@ import socket from "../../services/socket";
 import { useParams } from "react-router-dom";
 
 import './chat.scss';
+import { getChatHistory } from "../../services/api";
 
 const useStyles = makeStyles({
   table: {
@@ -29,12 +30,11 @@ const useStyles = makeStyles({
 });
 
 const Chat = () => {
-  const { userInfo } = JSON.parse(localStorage.getItem("user"));
+  const { userInfo, token } = JSON.parse(localStorage.getItem("user"));
   const classes = useStyles();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [history, setHistory] = useState([]);
-  // const [users, setUsers] = useState([]);
   const { id } = useParams();
   const scrollRef = useRef(null);
 
@@ -48,9 +48,15 @@ const Chat = () => {
     setMessage(target.value);
   }
 
+  async function getChat() {
+    const request = await getChatHistory(id, token);
+    if(request) {
+      setHistory(request);
+    }
+  }
+
   function handleChat(e) {
     e.preventDefault();
-    const { userInfo } = JSON.parse(localStorage.getItem("user"));
     const date = new Date();
     const time = `${date.getHours()}:${
       date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
@@ -66,15 +72,9 @@ const Chat = () => {
   useEffect(() => {
     socket.emit("join_room", id);
     socket.emit("message", { room: id, user: userInfo.username });
+    getChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-
-  }, []);
-
-  // socket.off("join").on("join", (data) => {
-  //   setUsers((state) => [...state, data]);
-  // });
 
   socket.off("message").on("message", (data) => {
     setHistory((state) => [...state, data]);

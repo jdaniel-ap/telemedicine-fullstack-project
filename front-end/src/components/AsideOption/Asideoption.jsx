@@ -1,17 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { SvgIcon } from '@material-ui/core';
-import { setAsideEvent } from '../../redux/slices/appSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { LocalHospital, LocalHospitalOutlined, DashboardOutlined, Dashboard, Description, DescriptionOutlined } from '@material-ui/icons';
 
+
 function Asideoption({ name, linkId }) {
+  const location = useLocation();
   const history = useHistory();
-  const dispatch = useDispatch();
   const asideEvent = useSelector(state => state.appEvents.asideEvents)
 
-  function handleAsideEvent({target}) {
-    dispatch(setAsideEvent(target.innerText));
+  function handleAsideEvent() {
     history.push(linkObj[name]);
     
   }
@@ -32,7 +31,7 @@ function Asideoption({ name, linkId }) {
 
   return (
       <span
-        className={`${asideEvent === name ? 'selected':''} aside-option`}
+        className={`${linkObj[name] === location.pathname ? 'selected':''} aside-option`}
         onClick={(e) => handleAsideEvent(e)}>
         <SvgIcon component={icons[name]} />
         {name}
