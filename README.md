@@ -1,16 +1,18 @@
 # React Telemedicine Fullstack project
 
+Medtools is a telemedicine application, uses relational (MySQL) and non-relational (MongoDB) databases to store data and web sockets to facilitate communication in real time.
+
 ## Built With
 
 • React • MySQL • Javascript • Typescript • HTML • CSS • Express • Node
 
 ## Front-end views!
- **Sign-in**
+
+**Sign-in**
 ![alt text](https://user-images.githubusercontent.com/74429277/137030105-5e52dc35-5732-4780-b0c0-d94fb6d85897.png)
 
 **Sign-up**
 ![alt text](https://user-images.githubusercontent.com/74429277/137030350-765f5be9-b6af-4c1b-b65d-b09194fe6e11.png)
-
 
 **Main page**
 ![alt text](https://user-images.githubusercontent.com/74429277/137030384-40742363-be3d-4a17-a4d2-797540aa3b4f.png)
@@ -35,7 +37,6 @@
 
 **Medic consult room**
 ![alt text](https://user-images.githubusercontent.com/74429277/137030814-bc0f43a5-b6a5-4ca2-8012-0f197fde90e3.png)
-
 
 ## API Documentation
 
@@ -94,7 +95,6 @@ This endpoint validate the login and return a token and basic user info.
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3N2IyOTlhLTIzMWYtNDBkYS05N2MzLWFjNzUyNjU0NTI2ZiIsImZ1bGxuYW1lIjoiSm9zZSBEYW5pZWwgQXJyZWF6YSBQdWVydGEiLCJ1c2VybmFtZSI6ImpkYW5pZWxfYXAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm1lZGljUm9sZSI6dHJ1ZSwiaWF0IjoxNjMxNDQ2MDUxLCJleHAiOjE2MzE0NDYzNTEsInN1YiI6IjQ3N2IyOTlhLTIzMWYtNDBkYS05N2MzLWFjNzUyNjU0NTI2ZiJ9.HgKfpimfS1ExsvkXMcgNx09GAiaO1yxzI4qfrtStS_o",
     "user": {
       "id": "477b299a-231f-40da-97c3-ac752654526f",
-      "fullname": "Tester Testundo Testeria",
       "username": "testex",
       "email": "testerland@test.com",
       "medicRole": true
@@ -126,7 +126,6 @@ This endpoint allows the user to edit their credentials to login
 
   ```json
   {
-    "fullname": "Tester Testeria",
     "username": "testex01",
     "email": "testerland@test.com"
   }
@@ -138,7 +137,6 @@ This endpoint allows the user to edit their credentials to login
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3N2IyOTlhLTIzMWYtNDBkYS05N2MzLWFjNzUyNjU0NTI2ZiIsImZ1bGxuYW1lIjoiSm9zZSBEYW5pZWwgQXJyZWF6YSBQdWVydGEiLCJ1c2VybmFtZSI6ImpkYW5pZWxfYXAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm1lZGljUm9sZSI6dHJ1ZSwiaWF0IjoxNjMxNDQ2NDkyLCJleHAiOjE2MzE0NDY3OTIsInN1YiI6IjQ3N2IyOTlhLTIzMWYtNDBkYS05N2MzLWFjNzUyNjU0NTI2ZiJ9.pj-YiAD2w8J4F_J2Jzz8zuGLUj4XQhtFjn7RY4W1GuY",
     "user": {
       "id": "477b299a-231f-40da-97c3-ac752654526f",
-      "fullname": "Tester Testeria",
       "username": "testex01",
       "email": "testerland@test.com",
       "medicRole": true
@@ -475,26 +473,26 @@ This endpoint allows the doctor and the user to get the conversation history. On
       {
         "message": "Hoola",
         "time": "14:41",
-        "user": "4341af71-1843-4f97-a107-52fe4316d020",
-        "id": "2321332423432423423"
+        "user": "2d53ba90-3a30-4490-ac34-0590a2a4eceb",
+        "id": "20fc6a6e-a0b5-4fad-919f-5edda7e4adc9"
       },
       {
         "message": "Hola :3 como estas?",
         "time": "15:41",
-        "user": "d02fb80f-30e3-44f7-8a4d-161c4a1c957e",
-        "id": "5465464534534534543"
+        "user": "7f30b5dd-f266-4976-a4a6-0fcd2342fb98",
+        "id": "dd241ae2-4135-4e3d-9704-da8f933b7b7e"
       },
       {
         "message": "Bien :D",
         "time": "16:41",
         "user": "4341af71-1843-4f97-a107-52fe4316d020",
-        "id": "3456654345345345345"
+        "id": "53696b47-9df0-48aa-bd92-4999b55bb0e2"
       },
       {
         "message": "¿Y tú?",
         "time": "16:42",
         "user": "4341af71-1843-4f97-a107-52fe4316d020",
-        "id": "8372950493193949569"
+        "id": "875b7026-e16d-43dd-b9cd-960387314587"
       }
     ]
   }
