@@ -4,7 +4,38 @@
 
 • React • MySQL • Javascript • Typescript • HTML • CSS • Express • Node
 
-## Front-end views
+## Front-end views!
+ **Sign-in**
+![alt text](https://user-images.githubusercontent.com/74429277/137030105-5e52dc35-5732-4780-b0c0-d94fb6d85897.png)
+
+**Sign-up**
+![alt text](https://user-images.githubusercontent.com/74429277/137030350-765f5be9-b6af-4c1b-b65d-b09194fe6e11.png)
+
+
+**Main page**
+![alt text](https://user-images.githubusercontent.com/74429277/137030384-40742363-be3d-4a17-a4d2-797540aa3b4f.png)
+
+**User credebtials**
+![alt text](https://user-images.githubusercontent.com/74429277/137030456-5e9fcbd8-4c09-4ada-991c-0967ca096579.png)
+
+**User basic data and medic information**
+![alt text](https://user-images.githubusercontent.com/74429277/137030576-b3cbbc09-7259-47ff-b0b7-ee86a267e2df.png)
+
+**User consults**
+![alt text](https://user-images.githubusercontent.com/74429277/137030622-7cb2671a-4eab-4bae-91fc-16265313ee12.png)
+
+**Generate consult**
+![alt text](https://user-images.githubusercontent.com/74429277/137030673-55ab1979-23d2-475b-9bb4-7762e83644b5.png)
+
+**User consult room**
+![alt text](https://user-images.githubusercontent.com/74429277/137030715-1fff2137-4777-43ae-a1d8-eb84371d491c.png)
+
+**Medic consults**
+![alt text](https://user-images.githubusercontent.com/74429277/137030777-be41fea6-30d4-4bb7-95c5-5e7fe2ffefe3.png)
+
+**Medic consult room**
+![alt text](https://user-images.githubusercontent.com/74429277/137030814-bc0f43a5-b6a5-4ca2-8012-0f197fde90e3.png)
+
 
 ## API Documentation
 
