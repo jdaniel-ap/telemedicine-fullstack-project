@@ -12,10 +12,9 @@ export class GetChatHistory {
   async getHistory() {
     const room = Number(this.roomId)
     const request = await getChatHistory(room);
-    const findPermission = request.messages.find(({user}) => user === this.userId);
 
-    if(!findPermission) throw new Error('Without permission');
+    if(request.medic === this.userId || request.pacient === this.userId) return request;
 
-    return request;
+    throw new Error('Without permission');
   }
 }

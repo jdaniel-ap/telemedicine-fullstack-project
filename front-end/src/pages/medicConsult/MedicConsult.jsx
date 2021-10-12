@@ -28,16 +28,16 @@ function MedicConsult() {
   const { pacientData, healthData } = pacientInfo;
   const { token } = JSON.parse(localStorage.getItem("user"));
   const { pacient, id } = useParams();
-  const consult = JSON.parse(localStorage.getItem("consults"));
   const consultId = Number(id);
+  const consult = JSON.parse(localStorage.getItem("consults"));
   const index = consult.findIndex((consult) => consult.id === consultId);
   const [logout] = useLogout();
   const dispatch = useDispatch();
 
-  function handleConsultStatus({ target }) {
-    dispatch(setStatus(target.value));
-    setConsultStatus(target.value);
-    consult[index].status = target.value;
+  function handleConsultStatus(value) {
+    dispatch(setStatus(value));
+    setConsultStatus(value);
+    consult[index].status = value;
     localStorage.setItem("consults", JSON.stringify(consult));
   }
 
@@ -53,6 +53,7 @@ function MedicConsult() {
       setpacientInfo({ pacientData: info, healthData });
       setLoad(false);
     };
+    handleConsultStatus(consult[index].status);
     pacientRequest();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,12 +115,8 @@ function MedicConsult() {
               <div className="details-box">
                 <span>Status</span>
                 <NativeSelect
-                  defaultValue={consult[index].status}
-                  onChange={(e) => handleConsultStatus(e)}
-                  inputProps={{
-                    name: "age",
-                    id: "uncontrolled-native",
-                  }}
+                  value={consult[index].status}
+                  onChange={(e) => handleConsultStatus(e.target.value)}
                 >
                   <option value="wait">Espera</option>
                   <option value="open">Abierta</option>

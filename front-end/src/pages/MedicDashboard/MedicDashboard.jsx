@@ -3,7 +3,6 @@ import Header from '../../components/Header/Header';
 import Tooltip from '@material-ui/core/Tooltip';
 import { LinearProgress } from '@material-ui/core';
 
-import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getMedicConsults } from '../../services/api';
 import { useDispatch } from 'react-redux';
@@ -31,7 +30,7 @@ function MedicDashboard() {
   function handleConsult(row) {
     dispatch(setStatus(row.status));
     localStorage.setItem('consults', JSON.stringify(data));
-    history.push(`/consult/medic/chat/${row.id}/${row.userId}`)
+    history.push(`/consult/medic/chat/${row.id}/${row.userId}`);
   }
 
   return (

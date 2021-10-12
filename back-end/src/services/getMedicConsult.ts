@@ -20,7 +20,11 @@ export class GetMedicConsult {
         createdAt: true,
         user: {
           select: {
-            userData: true
+            userData: {
+              select: {
+                fullname: true,
+              }
+            }
           }
         }
       }

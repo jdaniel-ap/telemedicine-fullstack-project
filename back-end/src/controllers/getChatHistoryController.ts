@@ -10,6 +10,8 @@ export class GetChatHistoryController {
 
     const request = await getChatHistory.getHistory();
 
+    console.log(request)
+
     return res.status(200).json(request);
   }
 }

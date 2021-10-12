@@ -1,8 +1,4 @@
-import { GetChatHistoryController } from './../controllers/getChatHistoryController';
 import { UpdateUserInfoController } from './../controllers/updateUserInfoController';
-import { GetMedicConsultController } from './../controllers/getMedicConsultController';
-import { GetPacientConsultController } from './../controllers/getPacientConsultsController';
-import { GenerateConsultController } from './../controllers/generateConsultController';
 import { Router } from 'express';
 import { AuthenticateUserController } from '../controllers/authenticateUserController';
 import { CreateUserController } from '../controllers/createUserController';
@@ -26,7 +22,7 @@ const updateUserInfo = new UpdateUserInfoController();
 userRouter.post('/sign-up', createUser.handle);
 userRouter.post('/login', limiter, authenticateUser.handle);
 userRouter.put('/edit', validateToken, updateUser.handle);
-userRouter.post('/user-data/update', validateToken, updateUserInfo.handle)
+userRouter.post('/data/update', validateToken, updateUserInfo.handle)
 userRouter.post('/data', validateToken, inserData.handle);
 userRouter.get('/data/health', validateToken, findUserInfo.handle);
 

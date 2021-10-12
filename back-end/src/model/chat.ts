@@ -1,4 +1,5 @@
 import { connection } from "./connection";
+import { uuid } from 'uuidv4';
 
 export const createRoom = async (data) => {
   const { id, userId, medicId, createAt } = data;
@@ -7,10 +8,13 @@ export const createRoom = async (data) => {
 }
 
 export const updateChatHistory = async (data) => {
-  const id = Number(data.room)
+  const id = Number(data.room);
+  const objectId = uuid();
+
+  const info = { id: objectId, ...data}
 
   await connection.then((db) => 
-    db.collection('history').updateOne({ room: id }, { $push: {  messages: data } } ));
+    db.collection('history').updateOne({ room: id }, { $push: {  messages: info } } ));
 }
 
 export const getChatHistory = async (id: number) => {

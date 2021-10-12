@@ -26,6 +26,7 @@
     "@types/mongodb": "^4.0.7",
     "@types/socket.io": "^3.0.2",
     "@types/socket.io-client": "^3.0.0",
+    "@types/uuid": "^8.3.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -38,6 +39,8 @@
     "mongodb": "^4.1.2",
     "pm2": "^5.1.1",
     "socket.io": "^4.2.0",
-    "sucrase": "^3.20.2"
+    "sucrase": "^3.20.2",
+    "uuid": "^3.4.0",
+    "uuidv4": "^6.2.12"
   }
 }
