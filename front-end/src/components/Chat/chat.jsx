@@ -8,6 +8,7 @@ import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 import socket from "../../services/socket";
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import './chat.scss';
 import { getChatHistory } from "../../services/api";
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Chat = () => {
+const Chat = ({ status }) => {
   const { userInfo, token } = JSON.parse(localStorage.getItem("user"));
   const classes = useStyles();
   const [message, setMessage] = useState("");
@@ -37,6 +38,7 @@ const Chat = () => {
   const [history, setHistory] = useState([]);
   const { id } = useParams();
   const scrollRef = useRef(null);
+  const consultState = useSelector(state => state.consult.status);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -66,10 +68,12 @@ const Chat = () => {
   }
 
   useEffect(() => {
+    console.log()
     socket.emit("message", chat);
   }, [chat]);
 
   useEffect(() => {
+    console.log(consultState.status === 'open');
     socket.emit("join_room", id);
     socket.emit("message", { room: id, user: userInfo.username });
     getChat();
@@ -125,6 +129,7 @@ const Chat = () => {
               onChange={(e) => handleMessage(e)}
               value={message}
               style={{ width: "85%", marginRight: "5px" }}
+              disabled={consultState === 'closed' || consultState === 'wait'}
             />
             <Fab color="primary" aria-label="add" type="submit">
               <SendIcon />

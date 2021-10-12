@@ -2,14 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Aside from '../../components/Aside/Aside';
 import Tooltip from '@material-ui/core/Tooltip';
-import { Button } from '@material-ui/core';
+import { Button, LinearProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getUserConsults } from '../../services/api';
 import socket from "../../services/socket";
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../../redux/slices/consultSlice';
 
 import './history.scss';
 
 function History() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [data, setData] = useState([]);
   const { token } = JSON.parse(localStorage.getItem('user'));
@@ -24,7 +27,7 @@ function History() {
   useEffect(() => {
     fetchConsult();
 
-  }, [fetchConsult]);
+  }, []);
 
   socket.on('consult_status', () => {
     fetchConsult();
@@ -40,30 +43,37 @@ function History() {
     return 'Consulta cerrada';
   }
 
+  function handleConsult(row) {
+    // console.log(row);
+    dispatch(setStatus(row.status));
+    history.push(`/dashboard/consult/pacient/chat/${row.id}`)
+  } 
+
   return (
     <div className="content">
       <Header />
       <main>
         <Aside />
         <section style={{textAlign: 'center'}}>
+          <h2 style={{textAlign: 'left'}}>Consultas</h2>
         <table>
           <tbody>
 
           <tr>
             <th>Status</th>
             <th>Identificador</th>
-            <th>Medico</th>
-            <th>Fecha</th>
+            <th className="test">Medico</th>
+            <th className="test">Fecha</th>
             <th>Motivo</th>
           </tr>
-          {data.map(row => (
+          {data.length === 0 ? <LinearProgress /> : data.map(row => (
             <tr className={row.status === 'closed' ? 'status-closed' : 'status-open'} key={row.id}>
               <td><Tooltip title={consultStatus(row.status)}><span className={row.status}></span></Tooltip></td>
               <td>{row.id}</td>
-              <Tooltip title={row.medicId}><td>{row.medicId.split('-')[0]}...</td></Tooltip>
-              <td>{row.createdAt.split('T')[0]}</td>
+              <Tooltip title={row.medicId} className="test"><td>{row.medicId.split('-')[0]}...</td></Tooltip>
+              <td className="test">{row.createdAt.split('T')[0]}</td>
               <Tooltip title={row.motive} ><td>{`${row.motive.split(' ')[0]} ${row.motive.split(' ')[1]}...`}</td></Tooltip>
-              <td><Button disabled={ row.status === 'wait' } className={row.status === 'closed' ? 'status-closed' : 'status-open'} onClick={() => history.push(`/dashboard/consult/pacient/chat/${row.id}`)}>Ver más</Button></td>
+              <td className="btn-history"><Button disabled={ row.status === 'wait' } className={`${row.status === 'closed' ? 'status-closed' : 'status-open'} btn-history`} onClick={() => handleConsult(row)}>Ver más</Button></td>
             </tr>
           ))}
           </tbody>

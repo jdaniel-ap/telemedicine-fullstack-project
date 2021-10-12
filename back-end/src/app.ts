@@ -6,6 +6,7 @@ import { userRouter } from "./router/user";
 import helmet from "helmet";
 import http from 'http';
 import { Server } from 'socket.io';
+import { consultRouter } from './router/consult';
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(helmet.hidePoweredBy());
 app.use(cors());
 
 app.use('/api/user', userRouter);
+app.use('/api/consult', consultRouter);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   const err = {

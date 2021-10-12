@@ -50,3 +50,13 @@ main {
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .test {
+    display: none;
+  }
+
+  table {
+    width: 4% !important;
+  }
+}

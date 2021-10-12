@@ -4,7 +4,7 @@ export class GetPacientData {
   pacientId: string;
   medicId: string;
 
-  constructor(pacientId: string, medicId) {
+  constructor(pacientId: string, medicId: string) {
     this.pacientId = pacientId;
     this.medicId = medicId;
   }

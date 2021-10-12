@@ -16,11 +16,8 @@ class UpdateUser {
   email: string;
   id: string;
 
-  constructor({ username, fullname, email, id } : IUserUpdateRequest) {
-    this.username = username;
-    this.fullname = fullname;
-    this.email = email;
-    this.id = id;
+  constructor(data : IUserUpdateRequest) {
+    Object.assign(this, data);
   }
 
   async execute() {

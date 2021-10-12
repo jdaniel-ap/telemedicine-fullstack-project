@@ -11,11 +11,8 @@ class CreateUser {
   email: string;
   medicRole: boolean; 
 
-  constructor({ username, password, email, medicRole} : IUserRequest) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.medicRole = medicRole;
+  constructor(data: IUserRequest) {
+    Object.assign(this, data);
   }
 
   async execute() {

@@ -8,9 +8,8 @@ class AuthenticateUser {
   username: string;
   password: string;
 
-  constructor({username, password} : IRequest) {
-    this.username = username;
-    this.password = password;
+  constructor(credentials : IRequest) {
+    Object.assign(this, credentials);
   }
 
   async execute() {

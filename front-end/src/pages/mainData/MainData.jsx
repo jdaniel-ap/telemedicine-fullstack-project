@@ -1,8 +1,7 @@
-import { Button } from "@material-ui/core";
+import { Button, LinearProgress, Checkbox  } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Aside from "../../components/Aside/Aside";
 import Header from "../../components/Header/Header";
-import { Checkbox } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetData,
@@ -20,6 +19,7 @@ function MainData() {
   const { userData, healthData } = globalState;
   const [editInput, setEditInput] = useState(false);
   const [defaultState, setDefaultState] = useState({ userData, healthData });
+  const [load, setLoad] = useState(false);
   const [logout] = useLogout()
   const dispatch = useDispatch();
   const { token } = JSON.parse(localStorage.getItem("user"));
@@ -66,6 +66,7 @@ function MainData() {
   };
 
   useEffect(() => {
+    setLoad(true);
     async function getData() {
       const request = await getUserDataRequest(token);
       if(request.status === 400) {
@@ -75,8 +76,10 @@ function MainData() {
         const { healthData, ...basicData } = request.data;
         const { id, userId, ...basicUserData } = basicData;
         dispatch(setDefaultData({ healthData, userData: basicUserData }));
+        setLoad(false);
       } else {
-        dispatch(resetData())
+        dispatch(resetData());
+        setLoad(false);
       }
     }
     if (!userData.id) {
@@ -92,224 +95,228 @@ function MainData() {
         <Aside />
         <section>
           <h2>Historia medica</h2>
+          {load ?
+          <LinearProgress /> :
+          <>
           <div className="health-content">
-            <div className="checkbox-area">
-              <div>
-                <span>Alergias</span>
-                <Checkbox
-                  color="secondary"
-                  className="check"
-                  name="isAlergic"
-                  disabled={!editInput ? true : false}
-                  checked={healthData.isAlergic}
-                  onChange={(e) => handleHealthData(e)}
-                />
-              </div>
-              <div>
-                <span>Consumo de alcohol</span>
-                <Checkbox
-                  color="secondary"
-                  name="useAlcohol"
-                  className="check"
-                  disabled={!editInput ? true : false}
-                  checked={healthData.useAlcohol}
-                  onChange={(e) => handleHealthData(e)}
-                />
-              </div>
-              <div>
-                <span>Tabaquismo</span>
-                <Checkbox
-                  color="secondary"
-                  name="useCigars"
-                  className="check"
-                  disabled={!editInput ? true : false}
-                  checked={healthData.useCigars}
-                  onChange={(e) => handleHealthData(e)}
-                />
-              </div>
-              <div>
-                <span>Drogas ilicitas</span>
-                <Checkbox
-                  color="secondary"
-                  name="useDrugs"
-                  className="check"
-                  disabled={!editInput ? true : false}
-                  checked={healthData.useDrugs}
-                  onChange={(e) => handleHealthData(e)}
-                />
-              </div>
-              <div>
-                <span>Medicamentos</span>
-                <Checkbox
-                  color="secondary"
-                  name="useMedication"
-                  className="check"
-                  disabled={!editInput ? true : false}
-                  checked={healthData.useMedication}
-                  onChange={(e) => handleHealthData(e)}
-                />
-              </div>
-            </div>
+          <div className="checkbox-area">
             <div>
-              <span>Nombres</span>
-              <input
-                type="text"
-                name="fullname"
-                className={enableEditField}
-                placeholder="Nombre y apellido"
-                value={userData.fullname}
-                onChange={(e) => handleUserData(e)}
+              <span>Alergias</span>
+              <Checkbox
+                color="secondary"
+                className="check"
+                name="isAlergic"
+                disabled={!editInput ? true : false}
+                checked={healthData.isAlergic}
+                onChange={(e) => handleHealthData(e)}
               />
             </div>
             <div>
-              <span>Edad</span>
-              <input
-                type="number"
-                name="age"
-                value={userData.age}
-                className={enableEditField}
-                onChange={(e) => handleUserData(e)}
+              <span>Medicamentos</span>
+              <Checkbox
+                color="secondary"
+                name="useMedication"
+                className="check"
+                disabled={!editInput ? true : false}
+                checked={healthData.useMedication}
+                onChange={(e) => handleHealthData(e)}
               />
             </div>
             <div>
-              <span>Sexo</span>
-              <input
-                type="text"
-                name="sex"
-                value={userData.sex}
-                className={enableEditField}
-                onChange={(e) => handleUserData(e)}
+              <span>Alcohol</span>
+              <Checkbox
+                color="secondary"
+                name="useAlcohol"
+                className="check"
+                disabled={!editInput ? true : false}
+                checked={healthData.useAlcohol}
+                onChange={(e) => handleHealthData(e)}
               />
             </div>
             <div>
-              <span>Raza</span>
-              <input
-                type="text"
-                name="race"
-                value={userData.race}
-                className={enableEditField}
-                onChange={(e) => handleUserData(e)}
+              <span>Tabaquismo</span>
+              <Checkbox
+                color="secondary"
+                name="useCigars"
+                className="check"
+                disabled={!editInput ? true : false}
+                checked={healthData.useCigars}
+                onChange={(e) => handleHealthData(e)}
               />
             </div>
             <div>
-              <span>Altura</span>
-              <input
-                type="number"
-                name="height"
-                placeholder="Metros"
-                value={userData.height}
-                className={enableEditField}
-                onChange={(e) => handleUserData(e)}
+              <span>Drogas</span>
+              <Checkbox
+                color="secondary"
+                name="useDrugs"
+                className="check"
+                disabled={!editInput ? true : false}
+                checked={healthData.useDrugs}
+                onChange={(e) => handleHealthData(e)}
               />
             </div>
-            <div>
-              <span>Peso</span>
-              <input
-                type="number"
-                placeholder="Kilogramos"
-                name="weight"
-                value={userData.weight}
-                className={enableEditField}
-                onChange={(e) => handleUserData(e)}
-              />
-            </div>
+          </div>
+          <div>
+            <span>Nombres</span>
+            <input
+              type="text"
+              name="fullname"
+              className={enableEditField}
+              placeholder="Nombre y apellido"
+              value={userData.fullname}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
+          <div>
+            <span>Edad</span>
+            <input
+              type="number"
+              name="age"
+              value={userData.age}
+              className={enableEditField}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
+          <div>
+            <span>Sexo</span>
+            <input
+              type="text"
+              name="sex"
+              value={userData.sex}
+              className={enableEditField}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
+          <div>
+            <span>Raza</span>
+            <input
+              type="text"
+              name="race"
+              value={userData.race}
+              className={enableEditField}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
+          <div>
+            <span>Altura</span>
+            <input
+              type="number"
+              name="height"
+              placeholder="Metros"
+              value={userData.height}
+              className={enableEditField}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
+          <div>
+            <span>Peso</span>
+            <input
+              type="number"
+              placeholder="Kilogramos"
+              name="weight"
+              value={userData.weight}
+              className={enableEditField}
+              onChange={(e) => handleUserData(e)}
+            />
+          </div>
 
-            <div
-              className={`hide-element-check ${
-                healthData.isAlergic && "show-element-check"
-              }`}
-              >
-              <span>Indicanos a que eres alergico</span>
-              <input
-                type="text"
-                name="alergics"
-                value={healthData.alergics}
-                className={enableEditField}
-                onChange={(e) => handleHealthData(e)}
-                />
-            </div>
-            <div
-              className={`hide-element-check ${
-                healthData.useCigars && "show-element-check"
-              }`}
+          <div
+            className={`hide-element-check ${
+              healthData.isAlergic && "show-element-check"
+            }`}
             >
-              <span>Consumo de cigarros/dia</span>
-              <input
-                type="text"
-                name="howManyCigars"
-                value={healthData.howManyCigars}
-                className={enableEditField}
-                onChange={(e) => handleHealthData(e)}
+            <span>Indicanos a que eres alergico</span>
+            <input
+              type="text"
+              name="alergics"
+              value={healthData.alergics}
+              className={enableEditField}
+              onChange={(e) => handleHealthData(e)}
               />
-            </div>
-            <div
-              className={`hide-element-check ${
-                healthData.useAlcohol && "show-element-check"
-              }`}
-            >
-              <span>Frecuencia de ingesta de alcohol</span>
-              <input
-                type="text"
-                name="howMuchAlcohol"
-                value={healthData.howMuchAlcohol}
-                className={enableEditField}
-                onChange={(e) => handleHealthData(e)}
-              />
-            </div>
-            <div
-              className={`hide-element-check ${
-                healthData.useDrugs && "show-element-check"
-              }`}
-            >
-              <span>Droga, cantidad y frecuencia</span>
-              <input
-                type="text"
-                name="howManyDrugs"
-                value={healthData.howManyDrugs}
-                className={enableEditField}
-                onChange={(e) => handleHealthData(e)}
-              />
-            </div>
-            <div
-              className={`hide-element-check ${
-                healthData.useMedication && "show-element-check"
-              }`}
-            >
-              <span>Uso medicamentos y frecuencia</span>
-              <input
-                type="text"
-                name="whichMedications"
-                value={healthData.whichMedications}
-                className={enableEditField}
-                onChange={(e) => handleHealthData(e)}
-              />
-            </div>
-            <div className="health-textarea">
-              <span>Comorbidades</span>
-              <textarea
-                type="text"
-                name="comorbidity"
-                className={`${enableEditField} profile-textarea`}
-                value={healthData.comorbidity}
-                onChange={(e) => handleHealthData(e)}
-              />
-            </div>
           </div>
-          <div className="btn-container">
-            <Button
-              className="btn primary-btn"
-              onClick={!editInput ? enableEditInput : sendRequest}
-            >
-              {editInput ? "Salvar" : "Editar"}
-            </Button>
-            <Button
-              className="btn cancel-btn"
-              onClick={disableEditInput}
-              disabled={editInput && false}
-            >
-              {editInput ? "Cancelar" : ""}
-            </Button>
+          <div
+            className={`hide-element-check ${
+              healthData.useCigars && "show-element-check"
+            }`}
+          >
+            <span>Consumo de cigarros/dia</span>
+            <input
+              type="text"
+              name="howManyCigars"
+              value={healthData.howManyCigars}
+              className={enableEditField}
+              onChange={(e) => handleHealthData(e)}
+            />
           </div>
+          <div
+            className={`hide-element-check ${
+              healthData.useAlcohol && "show-element-check"
+            }`}
+          >
+            <span>Frecuencia de ingesta de alcohol</span>
+            <input
+              type="text"
+              name="howMuchAlcohol"
+              value={healthData.howMuchAlcohol}
+              className={enableEditField}
+              onChange={(e) => handleHealthData(e)}
+            />
+          </div>
+          <div
+            className={`hide-element-check ${
+              healthData.useDrugs && "show-element-check"
+            }`}
+          >
+            <span>Droga, cantidad y frecuencia</span>
+            <input
+              type="text"
+              name="howManyDrugs"
+              value={healthData.howManyDrugs}
+              className={enableEditField}
+              onChange={(e) => handleHealthData(e)}
+            />
+          </div>
+          <div
+            className={`hide-element-check ${
+              healthData.useMedication && "show-element-check"
+            }`}
+          >
+            <span>Uso medicamentos y frecuencia</span>
+            <input
+              type="text"
+              name="whichMedications"
+              value={healthData.whichMedications}
+              className={enableEditField}
+              onChange={(e) => handleHealthData(e)}
+            />
+          </div>
+          <div className="health-textarea">
+            <span>Comorbidades</span>
+            <textarea
+              type="text"
+              name="comorbidity"
+              className={`${enableEditField} profile-textarea`}
+              value={healthData.comorbidity}
+              onChange={(e) => handleHealthData(e)}
+            />
+          </div>
+        </div>
+        <div className="btn-container">
+          <Button
+            className="btn primary-btn"
+            onClick={!editInput ? enableEditInput : sendRequest}
+          >
+            {editInput ? "Salvar" : "Editar"}
+          </Button>
+          <Button
+            className="btn cancel-btn"
+            onClick={disableEditInput}
+            disabled={editInput && false}
+          >
+            {editInput ? "Cancelar" : ""}
+          </Button>
+        </div>
+        </>}
         </section>
       </main>
     </div>

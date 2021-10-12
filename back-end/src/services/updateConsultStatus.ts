@@ -9,9 +9,8 @@ export class UpdateConsultStatus {
   consultId: number;
   consultStatus : string;
 
-  constructor({consultId, consultStatus} : IUpdateConsultStatus) {
-    this.consultId = consultId;
-    this.consultStatus = consultStatus;
+  constructor(consult: IUpdateConsultStatus) {
+    Object.assign(this, consult)
   }
 
   async execute() {

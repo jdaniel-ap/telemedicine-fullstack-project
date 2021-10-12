@@ -119,7 +119,7 @@ function Profile() {
             </Button>
           </div>
         </section>
-        <img src={profileImg} alt="profile" />
+        <img src={profileImg} alt="profile" className="page-forniture" />
       </main>
     </div>
   );

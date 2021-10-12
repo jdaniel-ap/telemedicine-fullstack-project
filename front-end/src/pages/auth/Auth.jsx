@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import illustrationImg from '../../assets/images/asd3.png';
 import logoImg from '../../assets/images/newlogo.png';
 import Button from '../../components/Button/Button';
@@ -6,13 +6,33 @@ import Alert from '../../components/Modal/Alert';
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext';
 import { useSelector } from 'react-redux';
-// import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
+import { NotificationContainer } from 'react-notifications';
 
 import '../auth/auth.scss';
+import 'react-notifications/lib/notifications.css';
 
 function Auth() {
+  const [load, setLoad] = useState(false);
+  const [alert, setAlert] = useState(false);
   const signState = useSelector(state => state.authentication.signState)
   const { fillFormFields, handleLogin, setSignState } = useContext(AuthContext);
+
+ async function handleLoad(event) {
+    setLoad(true);
+    const request  = await handleLogin(event, true);
+    console.log(request);
+    if(request) {
+      setLoad(false);
+      setAlert(true)
+
+      setTimeout(() => {
+        setAlert(false)
+      }, 4000);
+
+      /*SETAT MENSAGE DE ERROR */
+    }
+  }
 
   return (
     <div id='page-auth'>
@@ -21,6 +41,7 @@ function Auth() {
         <p>Rellena el formulario y comienza a gestionar tu tiempo</p>
       </aside>
       <main>
+        <Alert className={alert && 'error'}>Contraseña o usuario incorrectos</Alert>
         <div className="main-content">
           <img src={ logoImg } alt="Consult" />
           <form action="">
@@ -36,8 +57,8 @@ function Auth() {
               placeholder="Contraseña"
               onChange={(e) => fillFormFields(e, true)}
               />
-            <Button onClick={(e) => handleLogin(e, true)}>
-              Iniciar sesion
+            <Button onClick={(e) => handleLoad(e)}>
+              {load ? <CircularProgress color="inherit" /> : 'Iniciar sesion'}
             </Button>
           </form>
           <p>Si no tienes cuenta puedes registrarte {'\n'}
@@ -46,6 +67,7 @@ function Auth() {
         </div>
           { signState.signIn && <Alert className='error' onClick>Usuario o contraseña incorrectos</Alert> }
       </main>
+      <NotificationContainer />
     </div>
   )
 }

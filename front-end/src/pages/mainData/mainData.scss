@@ -107,3 +107,24 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .checkbox-area {
+    display: flex;
+    justify-content: left;
+    margin: 0 !important;
+    width: 590px !important;
+    overflow: scroll;
+
+    div {
+      width: 110px !important;
+    }
+  }
+  .health-content {
+    flex-direction: column;
+
+    textarea {
+      width: 35% !important;
+    }
+  }
+}

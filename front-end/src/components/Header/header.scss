@@ -29,3 +29,12 @@ header {
     padding-left: 20px;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  header {
+    justify-content: center;
+    div {
+      display: none !important;
+    }
+  }
+}

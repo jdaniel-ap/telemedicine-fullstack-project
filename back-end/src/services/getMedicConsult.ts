@@ -11,6 +11,18 @@ export class GetMedicConsult {
     const request = await client.consult.findMany({
       where: {
         medicId: this.id
+      },
+      select: {
+        status: true,
+        id: true,
+        userId: true,
+        motive: true,
+        createdAt: true,
+        user: {
+          select: {
+            userData: true
+          }
+        }
       }
     });
 

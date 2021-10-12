@@ -34,6 +34,8 @@ export const login = async (loginFormValues) => {
     },
   }).catch(err => err.response);
 
+  console.log(request);
+
   return request;
 }
 
@@ -133,6 +135,8 @@ export const getUserConsults = async (token) => {
     },
   });
 
+  console.log(request)
+
   return request;
 }
 
@@ -144,6 +148,8 @@ export const getMedicConsults = async (token) => {
       Authorization: token,
     },
   });
+
+  console.log(request)
 
   return request;
 }

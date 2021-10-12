@@ -1,41 +1,43 @@
-import React, { useEffect } from 'react';
-import emptyImg from '../../assets/images/empty.svg';
-import Header from '../../components/Header/Header';
-import Aside from '../../components/Aside/Aside';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/slices/appSlice';
+import React, { useEffect } from "react";
+import emptyImg from "../../assets/images/empty.svg";
+import Header from "../../components/Header/Header";
+import Aside from "../../components/Aside/Aside";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/slices/appSlice";
 
-import './adminDashboard.scss';
+import "./adminDashboard.scss";
 
 function AdminDashboard() {
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.appEvents.userData);
+  const userData = useSelector((state) => state.appEvents.userData);
 
   useEffect(() => {
-    const { userInfo }= JSON.parse(localStorage.getItem("user"));
+    const { userInfo } = JSON.parse(localStorage.getItem("user"));
     dispatch(setUser(userInfo));
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
-    <div className='content'>
+    <div className="content">
       <Header />
       <main>
         <Aside />
         <section>
-        <h2>
-          Hola
-          {'\n'}
-          {userData ? userData.fullname &&  userData.fullname.split(' ')[0] : ''}
-          , tienes
-          <span> 0</span> novedades
-        </h2>
-        <div className='welcome-content'>
-          <img src={emptyImg} alt='empty place' />
-        </div>
+          <h2>
+            Hola
+            {"\n"}
+            {userData
+              ? userData.fullname && userData.fullname.split(" ")[0]
+              : ""}
+            , tienes
+            <span> 0</span> novedades
+          </h2>
+          <div className="welcome-content">
+            <img src={emptyImg} alt="empty place" />
+          </div>
         </section>
       </main>
     </div>
-  )
+  );
 }
 
 /*
@@ -45,4 +47,4 @@ function AdminDashboard() {
 5)  Mover token verification al backend
 */
 
-export default AdminDashboard
+export default AdminDashboard;

@@ -57,6 +57,8 @@ export default function AuthContextProvider(props) {
     }
 
     setSignState((prevState) => ({ ...prevState, signIn: true }));
+
+    return data;
   }
 
   return (

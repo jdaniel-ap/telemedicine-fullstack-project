@@ -9,7 +9,7 @@ function Aside() {
   const options = ['Perfil', 'Historia', 'Consulta'];
   return (
     <aside>
-    <span>Personal</span>
+    <span>Menu</span>
     <div className='user-config'>
       { options.map(option => 
         <Asideoption 

@@ -56,3 +56,24 @@
     transform: translateX(0px);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .page-forniture {
+    display: none;
+  }
+
+  main {
+    flex-direction: column;
+
+    .welcome-content {
+      display: none;
+    }
+    aside {
+      .user-config {
+        display: flex;
+        flex-direction: row;
+        overflow: scroll;
+      }
+    }
+  }
+}
