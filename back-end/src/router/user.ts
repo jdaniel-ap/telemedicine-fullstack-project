@@ -27,7 +27,7 @@ userRouter.post('/sign-up', createUser.handle);
 userRouter.post('/login', limiter, authenticateUser.handle);
 userRouter.put('/edit', validateToken, updateUser.handle);
 userRouter.post('/user-data/update', validateToken, updateUserInfo.handle)
-userRouter.post('/user-data', validateToken, inserData.handle);
-userRouter.get('/user-data/health', validateToken, findUserInfo.handle);
+userRouter.post('/data', validateToken, inserData.handle);
+userRouter.get('/data/health', validateToken, findUserInfo.handle);
 
 export { userRouter };
