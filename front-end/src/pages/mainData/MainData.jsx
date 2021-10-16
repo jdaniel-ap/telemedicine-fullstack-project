@@ -13,6 +13,7 @@ import { setUserDataRequest, getUserDataRequest, updateUserData } from "../../se
 import useLogout from '../../hooks/useLogout';
 
 import "./mainData.scss";
+import capitalize from "capitalize";
 
 function MainData() {
   const globalState = useSelector((state) => state.userMedicData);
@@ -45,13 +46,13 @@ function MainData() {
 
   const handleHealthData = ({ target }) => {
     const { value, checked, name, type } = target;
-    dispatch(setHealthData({ value, checked, name, type }));
+    dispatch(setHealthData({ value: value.toLowerCase(), checked, name, type }));
   };
 
   const handleUserData = ({ target }) => {
     const { value, name, type } = target;
-    console.log(value)
-    dispatch(setUserData({ name, value, type }));
+
+    dispatch(setUserData({ name, value: value.toLowerCase(), type }));
   };
 
   const enableEditInput = () => {
@@ -163,7 +164,7 @@ function MainData() {
               name="fullname"
               className={enableEditField}
               placeholder="Nombre y apellido"
-              value={userData.fullname}
+              value={capitalize.words(userData.fullname)}
               onChange={(e) => handleUserData(e)}
             />
           </div>
@@ -182,7 +183,7 @@ function MainData() {
             <input
               type="text"
               name="sex"
-              value={userData.sex}
+              value={capitalize.words(userData.sex)}
               className={enableEditField}
               onChange={(e) => handleUserData(e)}
             />
@@ -192,7 +193,7 @@ function MainData() {
             <input
               type="text"
               name="race"
-              value={userData.race}
+              value={capitalize.words(userData.race)}
               className={enableEditField}
               onChange={(e) => handleUserData(e)}
             />

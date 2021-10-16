@@ -18,7 +18,7 @@ export default function AuthContextProvider(props) {
     if (isLogin) {
       dispatch(setLoginForm({name, value}));
     }
-    dispatch(setSignup({name, value}));
+    dispatch(setSignup({name, value }));
   }
 
   async function handleSignup(e) {
@@ -28,7 +28,6 @@ export default function AuthContextProvider(props) {
       {signUp: true, signIn: false, serverResponse: 
         { message: '', status: ''},
     }));
-
 
     const { data } = await signup(signupValues);
 

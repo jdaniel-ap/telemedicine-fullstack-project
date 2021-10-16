@@ -1,6 +1,24 @@
 .chat-box {
   border: solid 1px #c6c6c6;
   border-radius: 10px;
+
+  a {
+    text-decoration: none;
+  }
+  .hide {
+    display: none;
+  }
+
+  .images-link {
+    color: white;
+    background-color: #8e44ad;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+  }
 }
 
 .hide-chat {

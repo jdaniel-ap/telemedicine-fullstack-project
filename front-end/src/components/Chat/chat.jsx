@@ -7,10 +7,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 import socket from "../../services/socket";
-import { useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import './chat.scss';
+import "./chat.scss";
 import { getChatHistory } from "../../services/api";
 
 const useStyles = makeStyles({
@@ -35,10 +35,12 @@ const Chat = ({ status }) => {
   const classes = useStyles();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+  const [chatInfo, setChatInfo] = useState({});
   const [history, setHistory] = useState([]);
+  const [link, setLink] = useState("");
   const { id } = useParams();
   const scrollRef = useRef(null);
-  const consultState = useSelector(state => state.consult.status);
+  const consultState = useSelector((state) => state.consult.status);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -46,14 +48,30 @@ const Chat = ({ status }) => {
     }
   }, [history]);
 
+  function formatUrl(chatData) {
+    if (chatData.format === "pdf") {
+      const format = chatData.url.split("pdf");
+      format[1] = "jpg";
+      return setLink(format.join(""));
+    } else {
+      return setLink(chatData.url);
+    }
+  }
+
   function handleMessage({ target }) {
     setMessage(target.value);
   }
 
   async function getChat() {
     const request = await getChatHistory(id, token);
-    if(request) {
-      setHistory(request);
+    if (request) {
+      setHistory(request.messages);
+      if (request.images[0]) {
+        console.log(request.images);
+        console.log("request.images");
+        setChatInfo(request.images);
+        formatUrl(request.images[0]);
+      }
     }
   }
 
@@ -68,12 +86,10 @@ const Chat = ({ status }) => {
   }
 
   useEffect(() => {
-    console.log()
     socket.emit("message", chat);
   }, [chat]);
 
   useEffect(() => {
-    console.log(consultState.status === 'open');
     socket.emit("join_room", id);
     socket.emit("message", { room: id, user: userInfo.username });
     getChat();
@@ -87,7 +103,12 @@ const Chat = ({ status }) => {
   socket.on("sendMessage", (orderEvent) => {});
 
   return (
-    <div className="chat-box">
+    <div className="chat-box" style={{ overflow: "hidden" }}>
+      <a target="_blank" rel="noreferrer" href={link}>
+        <div className={link ? "images-link" : "hide"}>
+          Ver archivos de la consulta
+        </div>
+      </a>
       <Grid>
         <Grid item xs={12}>
           <List className={classes.messageArea}>
@@ -123,13 +144,21 @@ const Chat = ({ status }) => {
               )
             )}
           </List>
-          <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '15px'}} onSubmit={(e) => handleChat(e)}>
+          <form
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "15px",
+            }}
+            onSubmit={(e) => handleChat(e)}
+          >
             <input
               type="text"
               onChange={(e) => handleMessage(e)}
               value={message}
               style={{ width: "85%", marginRight: "5px" }}
-              disabled={consultState === 'closed' || consultState === 'wait'}
+              disabled={consultState === "closed" || consultState === "wait"}
             />
             <Fab color="primary" aria-label="add" type="submit">
               <SendIcon />

@@ -3445,6 +3445,11 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001265.tgz"
   "version" "1.0.30001265"
 
+"capitalize@^2.0.3":
+  "integrity" "sha512-Qc5ksT1/zEJBbFYD05h99hCNEW0cgyD0zzE5WvkgisNnppJ+16zfaSk34evF0j6pGW8hejkRUeygJ5uN5k22SQ=="
+  "resolved" "https://registry.npmjs.org/capitalize/-/capitalize-2.0.3.tgz"
+  "version" "2.0.3"
+
 "capture-exit@^2.0.0":
   "integrity" "sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g=="
   "resolved" "https://registry.yarnpkg.com/capture-exit/-/capture-exit-2.0.0.tgz"

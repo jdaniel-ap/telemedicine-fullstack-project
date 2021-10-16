@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 export const signup = async (signupValues) => {
-  const { username, fullname, email, password, medicRole } = signupValues;
+  const { username, email, password, medicRole } = signupValues;
   const request = await axios({
     method: 'post',
     url: 'http://localhost:8080/api/user/sign-up',
     data: {
       username,
-      fullname,
       email,
       password,
       medicRole
@@ -33,8 +32,6 @@ export const login = async (loginFormValues) => {
       password,
     },
   }).catch(err => err.response);
-
-  console.log(request);
 
   return request;
 }
@@ -90,8 +87,6 @@ export const updateUserData = async (data, token) => {
     },
   }).catch(err => err.response);
 
-  console.log(request)
-
   return request;
 }
 
@@ -109,7 +104,19 @@ export const getUserDataRequest = async (token) => {
   return request;
 }
 
-export const generateConsult = async (data, token) => {
+export const generateConsult = async (consult, token, image) => {
+  let imageObj = null
+  try {
+    imageObj = await axios
+    .post("https://api.cloudinary.com/v1_1/medtools/image/upload", image)
+    .then((response) => {
+      return response.data
+    });
+  } catch(e) {
+    console.log(e.message);
+    imageObj = null;
+  }
+  
   const request = await axios({
     method: 'post',
     url: 'http://localhost:8080/api/consult/new',
@@ -117,8 +124,10 @@ export const generateConsult = async (data, token) => {
       Authorization: token,
     },
     data: {
-      ...data
-    }
+      consult,
+      imageObj
+    },
+
   });
 
   return request.data;
@@ -135,8 +144,6 @@ export const getUserConsults = async (token) => {
     },
   });
 
-  console.log(request)
-
   return request;
 }
 
@@ -148,8 +155,6 @@ export const getMedicConsults = async (token) => {
       Authorization: token,
     },
   });
-
-  console.log(request)
 
   return request;
 }
@@ -177,9 +182,7 @@ export const getChatHistory = async (roomId, token) => {
     },
   }).catch(err => err.response);
 
-  console.log(request)
-
-  return request.data.messages;
+  return request.data;
 }
 
 
