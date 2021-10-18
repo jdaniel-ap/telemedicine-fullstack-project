@@ -105,17 +105,7 @@ export const getUserDataRequest = async (token) => {
 }
 
 export const generateConsult = async (consult, token, image) => {
-  let imageObj = null
-  try {
-    imageObj = await axios
-    .post("https://api.cloudinary.com/v1_1/medtools/image/upload", image)
-    .then((response) => {
-      return response.data
-    });
-  } catch(e) {
-    console.log(e.message);
-    imageObj = null;
-  }
+  if(!image) image = undefined;
   
   const request = await axios({
     method: 'post',
@@ -125,12 +115,14 @@ export const generateConsult = async (consult, token, image) => {
     },
     data: {
       consult,
-      imageObj
+      image,
     },
 
-  });
+  }).catch(err => err.response);;
 
-  return request.data;
+  console.log(request)
+
+  return request;
   
 }
 

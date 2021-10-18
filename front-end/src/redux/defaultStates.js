@@ -6,7 +6,6 @@ export const signStateDefault = {
 
 export const signupStateDefault = {
   username: "",
-  fullname: "",
   email: "",
   password: "",
   medicRole: false,

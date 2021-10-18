@@ -25,11 +25,7 @@ function Signup() {
     <div id="page-auth">
       <aside>
         <img src={illustrationImg} alt="simbolize a question" />
-        <p>
-          {signState.serverResponse.message
-            ? "Tu registro ha sido exitoso, ahora dirigete a la pagina de inicio"
-            : "Registrate en Medtools y facilita la gestion tu tiempo"}
-        </p>
+        <p>Registrate en Medtools y facilita la gestion tu tiempo</p>
       </aside>
       <main>
         <div className="main-content">

@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 import socket from "../../services/socket";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "./chat.scss";
@@ -35,7 +35,7 @@ const Chat = ({ status }) => {
   const classes = useStyles();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
-  const [chatInfo, setChatInfo] = useState({});
+  // const [chatInfo, setChatInfo] = useState({});
   const [history, setHistory] = useState([]);
   const [link, setLink] = useState("");
   const { id } = useParams();
@@ -69,7 +69,7 @@ const Chat = ({ status }) => {
       if (request.images[0]) {
         console.log(request.images);
         console.log("request.images");
-        setChatInfo(request.images);
+        // setChatInfo(request.images);
         formatUrl(request.images[0]);
       }
     }

@@ -28,17 +28,22 @@ export default function AuthContextProvider(props) {
       {signUp: true, signIn: false, serverResponse: 
         { message: '', status: ''},
     }));
-
+    
     const { data } = await signup(signupValues);
+    
 
     if(data.status === 'success') {
       dispatch(resetSignup());
       return dispatch(setSignState({signUp: false, signIn: false, serverResponse: { ...data } }));
     }
-    dispatch(setSignState(
-      {signUp: false, signIn: false, serverResponse: 
-        { message: data.message, status: data.status },
-    }));
+
+    setInterval(()=> {
+      dispatch(setSignState(
+        {signUp: false, signIn: false, serverResponse: 
+          { message: data.message, status: data.status },
+      }));
+
+    }, 4000)
   }
 
  async function handleLogin(e) {

@@ -2,6 +2,18 @@
   user-select: none;
   height: auto !important;
 
+  .data-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .hide {
+    display: none;
+  }
+
   .new-consult {
     position: relative;
 

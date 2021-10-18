@@ -20,7 +20,7 @@ export const slice = createSlice({
       return {...state, signupValues: { ...state.signupValues, [name]: value }}
     },
     resetSignup(state, _action) {
-      return { ...state, signupValues: {...signupStateDefault }}
+      return { ...state, signState: {...signStateDefault}, signupValues: {...signupStateDefault }}
     },
     setSignState(state, { payload }) {
       return {  ...state, signState: { ...payload } }
