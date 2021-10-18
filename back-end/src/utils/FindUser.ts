@@ -13,6 +13,13 @@ export class FindUser {
     const request = await client.user.findFirst({
       where: {
         username: this.identifier
+      },
+      include: {
+        userData: {
+          select: {
+            id: true
+          }
+        }
       }
     });
 
@@ -23,7 +30,7 @@ export class FindUser {
     return await client.user.findFirst({
       where: {
         id: this.identifier
-      }
+      },
     });
   }
 

@@ -6,12 +6,14 @@ export class GenerateConsultController {
 
   async handle(req: Request, res: Response) {
     const { body } = req;
-    const consult = {
-      ...body,
+    const { image, consult} = body;
+    
+    const consultObj = {
       status: 'wait',
+      ...consult,
     }
 
-    const generateConsult = new GenerateConsult(consult);
+    const generateConsult = new GenerateConsult(consultObj, image);
 
     const request = await generateConsult.execute();
 

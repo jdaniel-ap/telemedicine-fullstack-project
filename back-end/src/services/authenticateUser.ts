@@ -27,7 +27,7 @@ class AuthenticateUser {
     const { password:_, ...userData } = user;
     const token =  sign(userData, process.env.SECRET_KEY, {
       subject: userData.id,
-      expiresIn: '5m',
+      expiresIn: '30m',
     });
 
     return { token, userInfo: {...userData } };
