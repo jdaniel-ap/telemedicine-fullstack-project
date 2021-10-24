@@ -62,9 +62,7 @@ function MedicConsult() {
 
   useEffect(() => {
     socket.emit("consult_status", { consultId, consultStatus });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [consultStatus]);
+  }, [consultId, consultStatus]);
 
   function capitalizer(words) {
     if (pacientData.fullname) {

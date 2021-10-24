@@ -17,18 +17,17 @@ function History() {
   const [data, setData] = useState([]);
   const { token } = JSON.parse(localStorage.getItem("user"));
 
-  const fetchConsult = useCallback(async () => {
+  const handlerFetch = useCallback(async () => {
     const { data } = await getUserConsults(token);
     setData(data);
   }, [token]);
 
   useEffect(() => {
-    fetchConsult();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    handlerFetch();
+  }, [handlerFetch]);
 
   socket.on("consult_status", () => {
-    fetchConsult();
+    handlerFetch();
   });
 
   function consultStatus(status) {
@@ -42,7 +41,6 @@ function History() {
   }
 
   function handleConsult(row) {
-    // console.log(row);
     dispatch(setStatus(row.status));
     history.push(`/dashboard/consult/pacient/chat/${row.id}`);
   }

@@ -17,7 +17,8 @@ export class FindUser {
       include: {
         userData: {
           select: {
-            id: true
+            id: true,
+            fullname: true,
           }
         }
       }

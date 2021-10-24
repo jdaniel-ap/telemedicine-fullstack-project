@@ -1,5 +1,5 @@
 import { Button, CircularProgress } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Aside from "../../components/Aside/Aside";
 import Header from "../../components/Header/Header";
@@ -22,11 +22,13 @@ function Consult() {
   const [prev, setPrev] = useState("");
   const history = useHistory();
 
-  useEffect(() => {
+  const setDefaultData = useCallback(() => {
     setConsult((prevState) => ({ ...prevState, userId: userInfo.id }));
+  }, [userInfo.id]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => {
+    setDefaultData();
+  }, [setDefaultData]);
 
   function handleConsult({ target }) {
     const { name, value } = target;
@@ -78,7 +80,7 @@ function Consult() {
         <section>
           <h2>Consultas</h2>
           <div className={!userInfo.userData ? "hide" : "new-consult"}>
-            <Alert className={error && "error"}>{message}</Alert>
+            <Alert className={error ? "error" : ""}>{message}</Alert>
             <div>
               <span>ID Personal</span>
               <input
